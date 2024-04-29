@@ -1,0 +1,12 @@
+Dialogs:
+  com:
+    axonivy:
+      process:
+        mining:
+          demo:
+            Demo:
+              PageHearder: Process Monitor Page
+              PleaseSelectModule: Please select a module
+              PleaseSelectProcess: Please select a process
+              RequireMessage: Please select a process
+              Title: Process Mining Demo
