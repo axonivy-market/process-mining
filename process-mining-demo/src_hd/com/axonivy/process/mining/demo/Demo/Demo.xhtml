@@ -61,6 +61,19 @@
 						actionListener="#{processViewerBean.confirm()}" value="Proceed"
 						icon="pi pi-check" />
 				</div>
+
+				<p:dialog id="process-diagram-dialog" modal="true"
+					header="#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/ProcessViewer')}"
+					fitViewport="true">
+					<iframe id="process-diagram-iframe" name="process-diagram-iframe"
+						src="#{processViewerBean.selectedProcessDiagramUrl}" />
+				</p:dialog>
+				<script type="text/javascript">
+					function closeSigningDlg() {
+						PF('process-diagram-dialog').hide();
+						updateDocument();
+					}
+				</script>
 			</h:form>
 
 		</ui:define>

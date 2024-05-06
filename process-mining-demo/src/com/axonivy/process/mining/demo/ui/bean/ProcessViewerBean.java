@@ -28,7 +28,8 @@ public class ProcessViewerBean {
 	private String selectedProcessName;
 	private String selectedModuleName;
 	private HashMap<String, String> fileMap = new HashMap<>();
-	private static final String DIARGAM_URL_PATTERN = "%s/process-editor/?pmv=%s%s&pid=%s&theme=light";
+	private static final String DIARGAM_URL_PATTERN = "%s/process-editor/?pmv=%s%s&mode=viewer&pid=%s&theme=light";
+	private String selectedProcessDiagramUrl;
 
 	@PostConstruct
 	private void init() {
@@ -44,8 +45,8 @@ public class ProcessViewerBean {
 	public void confirm() throws IOException {
 		String appHomeRef = Ivy.html().applicationHomeRef();
 		String processId = fileMap.get(selectedProcessName);
-		String diagramUrl = DIARGAM_URL_PATTERN.formatted(appHomeRef, selectedModuleName, "%241", processId);
-		Ivy.log().warn(diagramUrl);
+		selectedProcessDiagramUrl = DIARGAM_URL_PATTERN.formatted(appHomeRef, selectedModuleName, "%241", processId);
+		Ivy.log().warn(selectedProcessDiagramUrl);
 	}
 
 	private void getProcessFilesFromProcessesFolder(File file, String pmvName) {
@@ -111,4 +112,8 @@ public class ProcessViewerBean {
 		this.selectedProcessName = selectedProcessName;
 	}
 
+
+	public String getSelectedProcessDiagramUrl() {
+		return selectedProcessDiagramUrl;
+	}
 }
