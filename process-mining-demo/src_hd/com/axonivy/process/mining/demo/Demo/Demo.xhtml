@@ -24,10 +24,10 @@
 								<div class="p-col-12 p-md-8">
 									<p:selectOneMenu id="module-chooser"
 										requiredMessage="#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/RequireMessage')}"
-										value="#{processViewerBean.selectedModuleName}">
+										value="#{processViewBean.selectedModuleName}">
 										<f:selectItem itemValue="#{null}" itemLabel=""
 											noSelectionOption="true" />
-										<f:selectItems value="#{processViewerBean.moduleName}" />
+										<f:selectItems value="#{processViewBean.pmvNames}" />
 										<p:ajax update="process-chooser" />
 									</p:selectOneMenu>
 								</div>
@@ -41,10 +41,10 @@
 								<div class="p-col-12 p-md-8">
 									<p:selectOneMenu id="process-chooser"
 										requiredMessage="#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/RequireMessage')}"
-										value="#{processViewerBean.selectedProcessName}">
+										value="#{processViewBean.selectedProcessName}">
 										<f:selectItem itemValue="#{null}" itemLabel=""
 											noSelectionOption="true" />
-										<f:selectItems value="#{processViewerBean.processesName}" />
+										<f:selectItems value="#{processViewBean.processesName}" />
 									</p:selectOneMenu>
 								</div>
 							</h:panelGroup>
@@ -58,7 +58,7 @@
 						actionListener="#{ivyWorkflowView.cancel()}" process="@this"
 						value="Cancel" />
 					<p:commandButton id="proceed"
-						actionListener="#{processViewerBean.confirm()}" value="Proceed"
+						actionListener="#{processViewBean.confirm()}" value="Proceed"
 						icon="pi pi-check" />
 				</div>
 
@@ -66,7 +66,7 @@
 					header="#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/ProcessViewer')}"
 					fitViewport="true">
 					<iframe id="process-diagram-iframe" name="process-diagram-iframe"
-						src="#{processViewerBean.selectedProcessDiagramUrl}" />
+						src="#{processViewBean.selectedProcessDiagramUrl}" />
 				</p:dialog>
 				<script type="text/javascript">
 					function closeSigningDlg() {
