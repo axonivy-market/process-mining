@@ -3,17 +3,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.axonivy.market</groupId>
-  <artifactId>process-mining-demo</artifactId>
+  <artifactId>process-mining</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>iar</packaging>
-  <dependencies>
-    <dependency>
-      <groupId>com.axonivy.market</groupId>
-      <artifactId>process-mining</artifactId>
-      <version>${project.version}</version>
-      <type>iar</type>
-    </dependency>
-  </dependencies>
   <build>
     <plugins>
       <plugin>

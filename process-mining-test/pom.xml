@@ -3,8 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.axonivy.market</groupId>
-  <artifactId>process-mining-demo</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <artifactId>process-mining-test</artifactId>
+  <version>10.0.19-SNAPSHOT</version>
   <packaging>iar</packaging>
   <dependencies>
     <dependency>
@@ -13,8 +13,15 @@
       <version>${project.version}</version>
       <type>iar</type>
     </dependency>
+    <dependency>
+    	<groupId>com.axonivy.ivy.test</groupId>
+    	<artifactId>unit-tester</artifactId>
+    	<version>10.0.14</version>
+    	<scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
+    <testSourceDirectory>src_test</testSourceDirectory>
     <plugins>
       <plugin>
         <groupId>com.axonivy.ivy.ci</groupId>
