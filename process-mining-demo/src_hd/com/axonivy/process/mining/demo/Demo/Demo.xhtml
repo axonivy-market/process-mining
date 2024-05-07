@@ -59,22 +59,24 @@
 						value="Cancel" />
 					<p:commandButton id="proceed"
 						actionListener="#{processViewBean.confirm()}" value="Proceed"
+						update="process-diagram-dialog"
 						icon="pi pi-check" />
 				</div>
-
-				<p:dialog id="process-diagram-dialog" modal="true"
-					header="#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/ProcessViewer')}"
-					fitViewport="true">
+				<p:dialog id="process-diagram-dialog" modal="true" draggable="true"
+					resizable="true" widgetVar="process-diagram-dialog-var"
+					minHeight="960" minWidth="1024"
+					header="#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/ProcessViewer')}">
 					<iframe id="process-diagram-iframe" name="process-diagram-iframe"
-						src="#{processViewBean.selectedProcessDiagramUrl}" />
+					height="960" width="1024"
+					src="#{processViewBean.selectedProcessDiagramUrl}" />
 				</p:dialog>
-				<script type="text/javascript">
-					function closeSigningDlg() {
-						PF('process-diagram-dialog').hide();
-						updateDocument();
-					}
-				</script>
 			</h:form>
+			<script type="text/javascript">
+				function closeSigningDlg() {
+					PF('process-diagram-dialog-var').hide();
+					updateDocument();
+				}
+			</script>
 
 		</ui:define>
 	</ui:composition>
