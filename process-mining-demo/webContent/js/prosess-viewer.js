@@ -14,7 +14,7 @@ function removeDefaultFrequency() {
     });
 }
 
-function resetDigram() {
+function santizeDiagram() {
     removeDefaultFrequency();
     removeExecutedClass();
 }
