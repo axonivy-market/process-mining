@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 import ch.ivyteam.ivy.environment.Ivy;
+import ch.ivyteam.ivy.workflow.start.IProcessWebStartable;
 import ch.ivyteam.ivy.workflow.start.IWebStartable;
 
 public class ProcessUtils {
@@ -32,11 +33,11 @@ public class ProcessUtils {
 				.collect(Collectors.toList());
 	}
 
-	public Map<String, List<IWebStartable>> getProcessesWithPmv() {
-		Map<String, List<IWebStartable>> result = new HashMap<>();
+	public Map<String, List<IProcessWebStartable>> getProcessesWithPmv() {
+		Map<String, List<IProcessWebStartable>> result = new HashMap<>();
 		for (IWebStartable process : getAllProcesses()) {
 			String pmvName = process.pmv().getProjectName();
-			result.computeIfAbsent(pmvName, k -> new ArrayList<>()).add(process);
+			result.computeIfAbsent(pmvName, k -> new ArrayList<>()).add((IProcessWebStartable) process);
 		}
 		return result;
 	}

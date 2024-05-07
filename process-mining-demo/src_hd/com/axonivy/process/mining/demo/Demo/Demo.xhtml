@@ -46,6 +46,7 @@
 										<f:selectItem itemValue="#{null}" itemLabel=""										
 											noSelectionOption="true" />
 										<f:selectItems value="#{processViewBean.processesName}" />
+										<p:ajax listener="#{processViewBean.onChangeSelectedProcessName()}" update="@form" />
 									</p:selectOneMenu>
 								</div>
 							</h:panelGroup>
@@ -59,7 +60,7 @@
 						actionListener="#{ivyWorkflowView.cancel()}" process="@this"
 						value="Cancel" />
 					<p:commandButton id="proceed"
-					update="@form"
+						update="@form"
 						actionListener="#{processViewBean.confirm()}" value="Proceed"
 						icon="pi pi-check" />
 				</div>

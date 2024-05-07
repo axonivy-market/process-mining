@@ -1,10 +1,10 @@
 package com.axonivy.process.mining.demo.ui.bean;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,7 +17,6 @@ import org.primefaces.PF;
 
 import com.axonivy.process.mining.demo.ui.util.ProcessUtils;
 
-import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.process.viewer.api.ProcessViewer;
 import ch.ivyteam.ivy.workflow.start.IProcessWebStartable;
 import ch.ivyteam.ivy.workflow.start.IWebStartable;
@@ -27,7 +26,7 @@ import ch.ivyteam.ivy.workflow.start.IWebStartable;
 public class ProcessViewBean {
 	private String selectedProcessName;
 	private String selectedModuleName;
-	private Map<String, List<IWebStartable>> processesMap = new HashMap<>();
+	private Map<String, List<IProcessWebStartable>> processesMap = new HashMap<>();
 	private String selectedProcessDiagramUrl;
 	private String selectedProcessPidId;
 
@@ -36,21 +35,23 @@ public class ProcessViewBean {
 		processesMap = ProcessUtils.getInstance().getProcessesWithPmv();
 	}
 
-	public void confirm() throws IOException {
-		getProcessDiagramUrl();
+	public void confirm() {
 		PF.current().executeScript("PF('process-diagram-dialog-var').show()");
 	}
 
-	public void getProcessDiagramUrl() {
+	public void onChangeSelectedProcessName() {
 		if (StringUtils.isNotBlank(selectedProcessName) && StringUtils.isNotBlank(selectedModuleName)) {
-			var x = processesMap.get(selectedModuleName).stream()
-					.filter(process -> process.getDisplayName().equalsIgnoreCase(selectedProcessName)).findAny()
-					.orElse(null);
-			IProcessWebStartable currentProcess = (IProcessWebStartable) x;
-			selectedProcessPidId = currentProcess.pid().getParent().toString();
-			selectedProcessDiagramUrl = ProcessViewer.of(currentProcess).url().toWebLink().getAbsolute();
-			Ivy.log().warn(selectedProcessDiagramUrl);
+			Optional.ofNullable(getSelectedIProcessWebStartable()).ifPresent(process -> {
+				selectedProcessPidId = process.pid().getParent().toString();
+				selectedProcessDiagramUrl = ProcessViewer.of(process).url().toWebLink().getAbsolute();
+			});
 		}
+	}
+
+	public IProcessWebStartable getSelectedIProcessWebStartable() {
+		return processesMap.get(selectedModuleName).stream()
+				.filter(process -> process.getDisplayName().equalsIgnoreCase(selectedProcessName)).findAny()
+				.orElse(null);
 	}
 
 	public List<String> getProcessesName() {
