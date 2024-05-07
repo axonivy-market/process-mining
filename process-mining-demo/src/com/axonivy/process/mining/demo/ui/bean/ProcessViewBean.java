@@ -1,6 +1,5 @@
 package com.axonivy.process.mining.demo.ui.bean;
 
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,16 +11,12 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.PF;
 
 import com.axonivy.process.mining.demo.ui.util.ProcessUtils;
 
-import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.process.viewer.api.ProcessViewer;
 import ch.ivyteam.ivy.workflow.start.IProcessWebStartable;
 import ch.ivyteam.ivy.workflow.start.IWebStartable;
@@ -53,18 +48,18 @@ public class ProcessViewBean {
 			});
 		}
 	}
-
-	private void sanitizeProcessDiagramByjquery() {
-		ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
-
-		try {
-			engine.eval(new FileReader("C:/Scripts/Jsfunctions.js"));
-			Invocable invocable = (Invocable) engine;
-			invocable.invokeFunction("santizeDiagram");
-		} catch (Exception e) {
-			Ivy.log().error(e.getMessage());
-		}
-	}
+//
+//	private void sanitizeProcessDiagramByjquery() {
+//		ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
+//
+//		try {
+//			engine.eval(new FileReader("C:/Scripts/Jsfunctions.js"));
+//			Invocable invocable = (Invocable) engine;
+//			invocable.invokeFunction("santizeDiagram");
+//		} catch (Exception e) {
+//			Ivy.log().error(e.getMessage());
+//		}
+//	}
 
 	public IProcessWebStartable getSelectedIProcessWebStartable() {
 		return processesMap.get(selectedModuleName).stream()
