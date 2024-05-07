@@ -13,8 +13,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.PF;
 
-import com.axonivy.portal.components.service.impl.ProcessService;
 import com.axonivy.process.mining.demo.ui.util.ProcessUtils;
 
 import ch.ivyteam.ivy.environment.Ivy;
@@ -28,8 +28,8 @@ public class ProcessViewBean {
 	private String selectedProcessName;
 	private String selectedModuleName;
 	private Map<String, List<IWebStartable>> processesMap = new HashMap<>();
-	private static final String DIARGAM_URL_PATTERN = "%s/process-editor/?pmv=%s%s&mode=viewer&pid=%s&theme=light";
 	private String selectedProcessDiagramUrl;
+	private String selectedProcessPidId;
 
 	@PostConstruct
 	private void init() {
@@ -37,35 +37,20 @@ public class ProcessViewBean {
 	}
 
 	public void confirm() throws IOException {
-		List<IWebStartable> processes = ProcessService.getInstance().findProcesses().getProcesses();
-		for (IWebStartable process : processes) {
-			ProcessViewer.of((IProcessWebStartable) process).url().toWebLink();
-			if (process.pmv().getProjectName().equalsIgnoreCase("adobe-esign-connector")) {
-
-				Ivy.log().warn(ProcessViewer.of((IProcessWebStartable) process).url().toWebLink().getRelative());
-//			Ivy.log().warn("id " + process.getId());
-//				Ivy.log().warn("pmv " + process.pmv().getId());
-//				for (String name : process.customFields().names()) {
-//					Ivy.log().warn(name);
-//				}
-//				Ivy.log().warn("pid " + process.);
-
-//			Ivy.log().warn("getDisplayName " + process.getDisplayName());
-//			Ivy.log().warn("getName " + process.getName());
-
-				Ivy.log().warn("getRelative " + process);
-				Ivy.log().warn("getAbsolute " + process.getLink().getAbsolute());
-			}
-
-		}
-		String appHomeRef = Ivy.html().applicationHomeRef();
-//		String processId = fileMap.get(selectedProcessName);
-		selectedProcessDiagramUrl = DIARGAM_URL_PATTERN.formatted(appHomeRef, selectedModuleName, "%241", "");
-		Ivy.log().warn(selectedProcessDiagramUrl);
+		getProcessDiagramUrl();
+		PF.current().executeScript("PF('process-diagram-dialog-var').show()");
 	}
 
-	public Set<String> getPmvNames() {
-		return processesMap.keySet();
+	public void getProcessDiagramUrl() {
+		if (StringUtils.isNotBlank(selectedProcessName) && StringUtils.isNotBlank(selectedModuleName)) {
+			var x = processesMap.get(selectedModuleName).stream()
+					.filter(process -> process.getDisplayName().equalsIgnoreCase(selectedProcessName)).findAny()
+					.orElse(null);
+			IProcessWebStartable currentProcess = (IProcessWebStartable) x;
+			selectedProcessPidId = currentProcess.pid().getParent().toString();
+			selectedProcessDiagramUrl = ProcessViewer.of(currentProcess).url().toWebLink().getAbsolute();
+			Ivy.log().warn(selectedProcessDiagramUrl);
+		}
 	}
 
 	public List<String> getProcessesName() {
@@ -74,6 +59,22 @@ public class ProcessViewBean {
 		}
 		return processesMap.get(selectedModuleName).stream().map(IWebStartable::getDisplayName)
 				.collect(Collectors.toList());
+	}
+
+	public Set<String> getPmvNames() {
+		return processesMap.keySet();
+	}
+
+	public String getSelectedProcessPidId() {
+		return selectedProcessPidId;
+	}
+
+	public void setSelectedProcessPidId(String selectedProcessPidId) {
+		this.selectedProcessPidId = selectedProcessPidId;
+	}
+
+	public void setSelectedProcessDiagramUrl(String selectedProcessDiagramUrl) {
+		this.selectedProcessDiagramUrl = selectedProcessDiagramUrl;
 	}
 
 	public String getSelectedModuleName() {

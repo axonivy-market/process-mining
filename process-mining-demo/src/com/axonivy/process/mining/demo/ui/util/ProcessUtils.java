@@ -4,18 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import com.axonivy.portal.components.service.impl.ProcessService;
+import org.apache.commons.lang3.StringUtils;
 
+import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.workflow.start.IWebStartable;
 
 public class ProcessUtils {
 	private static ProcessUtils instance;
+	private static final String PORTAL_START_REQUEST_PATH = "/DefaultApplicationHomePage.ivp";
+	private static final String PORTAL_IN_TEAMS_REQUEST_PATH = "InTeams.ivp";
 
 	private ProcessUtils() {
 	};
 
 	public static ProcessUtils getInstance() {
+
 		if (instance == null) {
 			instance = new ProcessUtils();
 		}
@@ -23,7 +28,8 @@ public class ProcessUtils {
 	}
 
 	public List<IWebStartable> getAllProcesses() {
-		return ProcessService.getInstance().findProcesses().getProcesses();
+		return Ivy.session().getStartables().stream().filter(process -> isNotPortalHomeAndMSTeamsProcess(process))
+				.collect(Collectors.toList());
 	}
 
 	public Map<String, List<IWebStartable>> getProcessesWithPmv() {
@@ -35,4 +41,8 @@ public class ProcessUtils {
 		return result;
 	}
 
+	private boolean isNotPortalHomeAndMSTeamsProcess(IWebStartable process) {
+		String relativeEncoded = process.getLink().getRelativeEncoded();
+		return !StringUtils.endsWithAny(relativeEncoded, PORTAL_START_REQUEST_PATH, PORTAL_IN_TEAMS_REQUEST_PATH);
+	}
 }

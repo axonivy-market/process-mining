@@ -9,6 +9,7 @@
 	<ui:composition template="/layouts/basic-10.xhtml">
 		<ui:define name="title">#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/Title')}</ui:define>
 		<ui:define name="content">
+		  <h:outputScript name="process-viewer.js" library="javascript" target="head"/>
 			<h3>
 				#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/PageHearder')}
 			</h3>
@@ -42,7 +43,7 @@
 									<p:selectOneMenu id="process-chooser"
 										requiredMessage="#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/RequireMessage')}"
 										value="#{processViewBean.selectedProcessName}">
-										<f:selectItem itemValue="#{null}" itemLabel=""
+										<f:selectItem itemValue="#{null}" itemLabel=""										
 											noSelectionOption="true" />
 										<f:selectItems value="#{processViewBean.processesName}" />
 									</p:selectOneMenu>
@@ -58,24 +59,28 @@
 						actionListener="#{ivyWorkflowView.cancel()}" process="@this"
 						value="Cancel" />
 					<p:commandButton id="proceed"
+					update="@form"
 						actionListener="#{processViewBean.confirm()}" value="Proceed"
-						update="process-diagram-dialog"
 						icon="pi pi-check" />
 				</div>
-				<p:dialog id="process-diagram-dialog" modal="true" draggable="true"
+				<iframe id="process-diagram-iframe" name="process-diagram-iframe"
+					height="960" width="1024"
+					src="#{processViewBean.selectedProcessDiagramUrl}" />
+				<!-- 				<p:dialog id="process-diagram-dialog" modal="true" draggable="true"
 					resizable="true" widgetVar="process-diagram-dialog-var"
 					minHeight="960" minWidth="1024"
 					header="#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/ProcessViewer')}">
 					<iframe id="process-diagram-iframe" name="process-diagram-iframe"
 					height="960" width="1024"
 					src="#{processViewBean.selectedProcessDiagramUrl}" />
-				</p:dialog>
+				</p:dialog> -->
 			</h:form>
-			<script type="text/javascript">
+ 			<script type="text/javascript">
 				function closeSigningDlg() {
 					PF('process-diagram-dialog-var').hide();
 					updateDocument();
-				}
+				},
+				
 			</script>
 
 		</ui:define>
