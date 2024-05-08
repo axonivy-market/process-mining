@@ -16,7 +16,8 @@
         "outLink" : "bookFlight.ivp",
         "task" : {
           "name" : "Search a Flight"
-        }
+        },
+        "tags" : "demo"
       },
       "visual" : {
         "at" : { "x" : 144, "y" : 392 }

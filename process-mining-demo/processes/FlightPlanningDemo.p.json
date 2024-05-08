@@ -16,7 +16,8 @@
         "outLink" : "planFlight.ivp",
         "task" : {
           "name" : "Planner plan a flight"
-        }
+        },
+        "tags" : "demo"
       },
       "visual" : {
         "at" : { "x" : 112, "y" : 592 }
@@ -372,7 +373,8 @@
         "outLink" : "recommendDestination.ivp",
         "task" : {
           "name" : "Marketing recommend destination"
-        }
+        },
+        "tags" : "demo"
       },
       "visual" : {
         "at" : { "x" : 112, "y" : 1456 },
