@@ -1,0 +1,4 @@
+ChargeForTicketsData #class
+com.axonivy.market.process.mining.demo.ChargeForTickets #namespace
+isCharge Boolean #field
+isCharge PERSISTENT #fieldModifier

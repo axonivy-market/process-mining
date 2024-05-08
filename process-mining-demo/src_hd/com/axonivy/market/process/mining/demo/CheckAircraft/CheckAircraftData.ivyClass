@@ -1,0 +1,4 @@
+CheckAircraftData #class
+com.axonivy.market.process.mining.demo.CheckAircraft #namespace
+isEngineeringApproveAircraft Boolean #field
+isEngineeringApproveAircraft PERSISTENT #fieldModifier

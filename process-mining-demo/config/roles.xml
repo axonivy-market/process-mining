@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <role>
     <identifier>Everybody</identifier>
+    <role>
+        <identifier>Commercial</identifier>
+        <role>
+            <identifier>Marketing</identifier>
+        </role>
+        <role>
+            <identifier>Aviation planner</identifier>
+        </role>
+    </role>
+    <role>
+        <identifier>Operation</identifier>
+        <role>
+            <identifier>Flight operation</identifier>
+            <role>
+                <identifier>Pilot</identifier>
+            </role>
+            <role>
+                <identifier>Cabin crew</identifier>
+            </role>
+        </role>
+        <role>
+            <identifier>Maintenance and Engineering</identifier>
+        </role>
+    </role>
 </role>

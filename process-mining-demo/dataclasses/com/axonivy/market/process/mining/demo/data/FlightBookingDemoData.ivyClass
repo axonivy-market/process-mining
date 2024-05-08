@@ -1,0 +1,7 @@
+FlightBookingDemoData #class
+com.axonivy.market.process.mining.demo.data #namespace
+booking com.axonivy.market.process.mining.demo.data.BookingInformation #field
+booking PERSISTENT #fieldModifier
+isBackToSearchPage Boolean #field
+isBackToSubmitInformationPage Boolean #field
+isPaid Boolean #field

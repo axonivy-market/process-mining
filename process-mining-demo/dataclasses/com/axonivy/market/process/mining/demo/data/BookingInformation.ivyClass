@@ -1,0 +1,16 @@
+BookingInformation #class
+com.axonivy.market.process.mining.demo.data #namespace
+flight com.axonivy.market.process.mining.demo.data.FlightInformation #field
+flight PERSISTENT #fieldModifier
+userEmail String #field
+userEmail PERSISTENT #fieldModifier
+userName String #field
+userName PERSISTENT #fieldModifier
+numberOfSeats String #field
+numberOfSeats PERSISTENT #fieldModifier
+seats String #field
+seats PERSISTENT #fieldModifier
+visaNumber String #field
+visaNumber PERSISTENT #fieldModifier
+isChargeLater Boolean #field
+isChargeLater PERSISTENT #fieldModifier

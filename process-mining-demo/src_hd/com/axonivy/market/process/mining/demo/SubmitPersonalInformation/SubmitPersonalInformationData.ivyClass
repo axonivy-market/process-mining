@@ -1,0 +1,6 @@
+SubmitPersonalInformationData #class
+com.axonivy.market.process.mining.demo.SubmitPersonalInformation #namespace
+isChargeLater Boolean #field
+isChargeLater PERSISTENT #fieldModifier
+isBackToSearchPage Boolean #field
+isBackToSearchPage PERSISTENT #fieldModifier
