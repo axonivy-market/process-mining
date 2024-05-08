@@ -9,7 +9,7 @@
 	<ui:composition template="/layouts/basic-10.xhtml">
 		<ui:define name="title">#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/Title')}</ui:define>
 		<ui:define name="content">
-			<h:outputScript name="resources/js/process-viewer.js" target="head" />
+ 			<h:outputScript name="process-viewer.js" target="head"></h:outputScript>
 			<h3>
 				#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/PageHearder')}
 			</h3>
@@ -46,7 +46,7 @@
 										<f:selectItem itemValue="#{null}" itemLabel=""
 											noSelectionOption="true" />
 										<f:selectItems value="#{processViewBean.processesName}" />
-										<p:ajax listener="resetDigram()" update="@form" />
+										<p:ajax update="@form" listener="#{processViewBean.onChangeSelectedProcessName()}"/>
 									</p:selectOneMenu>
 								</div>
 							</h:panelGroup>
@@ -56,11 +56,8 @@
 				</p:fieldset>
 				<br />
 				<div class="command-btns">
-					<p:commandLink id="cancel"
-						actionListener="#{ivyWorkflowView.cancel()}" process="@this"
-						value="Cancel" />
-					<p:commandButton id="proceed" update="@form"
-						actionListener="#{processViewBean.confirm()}" value="Proceed"
+					<p:commandButton id="show-statistic-btn"
+						onclick="santizeDiagram()" value="Show statistic"
 						icon="pi pi-check" />
 				</div>
 				<iframe id="process-diagram-iframe" name="process-diagram-iframe"
@@ -75,17 +72,6 @@
 					src="#{processViewBean.selectedProcessDiagramUrl}" />
 				</p:dialog> -->
 			</h:form>
-			<script type="text/javascript">
-				function resetDigram() {
-					$("#process-diagram-iframe").contents().find(".executed")
-							.removeClass("executed");
-					$("#process-diagram-iframe").contents().find(
-							".execution-badge").each(function() {
-						$(this).parent().remove();
-					});
-				}
-			</script>
-
 		</ui:define>
 	</ui:composition>
 </h:body>
