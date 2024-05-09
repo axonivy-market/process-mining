@@ -1,0 +1,75 @@
+{
+  "format" : "10.0.0",
+  "id" : "18F51143F10FAF30",
+  "kind" : "HTML_DIALOG",
+  "config" : {
+    "data" : "com.axon.market.process.mining.demo.MakeDecision.MakeDecisionData"
+  },
+  "elements" : [ {
+      "id" : "f0",
+      "type" : "HtmlDialogStart",
+      "name" : "start()",
+      "config" : {
+        "callSignature" : "start",
+        "result" : {
+          "params" : [
+            { "name" : "isApproved", "type" : "Boolean" }
+          ],
+          "map" : {
+            "result.isApproved" : "in.isApproved"
+          }
+        },
+        "guid" : "18F51143F129ED05"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 64 }
+      },
+      "connect" : { "id" : "f2", "to" : "f1" }
+    }, {
+      "id" : "f1",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 224, "y" : 64 }
+      }
+    }, {
+      "id" : "f4",
+      "type" : "HtmlDialogExit",
+      "visual" : {
+        "at" : { "x" : 224, "y" : 160 }
+      }
+    }, {
+      "id" : "f11",
+      "type" : "HtmlDialogMethodStart",
+      "name" : "approve()",
+      "config" : {
+        "callSignature" : "approve",
+        "input" : {
+          "map" : {
+            "out.isApproved" : "true"
+          }
+        },
+        "guid" : "18F51682826A604B"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 256 }
+      },
+      "connect" : { "id" : "f12", "to" : "f4", "via" : [ { "x" : 224, "y" : 256 } ] }
+    }, {
+      "id" : "f10",
+      "type" : "HtmlDialogMethodStart",
+      "name" : "reject()",
+      "config" : {
+        "callSignature" : "reject",
+        "input" : {
+          "map" : {
+            "out.isApproved" : "false"
+          }
+        },
+        "guid" : "18F5168503F79350"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 160 }
+      },
+      "connect" : { "id" : "f13", "to" : "f4" }
+    } ]
+}

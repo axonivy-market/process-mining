@@ -6,4 +6,5 @@
 # '<project>/Config/_<environment>/variables.yaml
 #
 Variables:
-#  myVariable: value
+  # Maximum query results per query task
+  maxQueryResults: 10000

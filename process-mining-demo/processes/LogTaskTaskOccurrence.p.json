@@ -1,0 +1,44 @@
+{
+  "format" : "10.0.0",
+  "id" : "18F5B41D108E3A4A",
+  "config" : {
+    "data" : "com.axonivy.market.process.mining.demo.LogTaskTaskOccurrenceData"
+  },
+  "elements" : [ {
+      "id" : "f0",
+      "type" : "RequestStart",
+      "name" : "LogTaskOccurrences.ivp",
+      "config" : {
+        "callSignature" : "start",
+        "outLink" : "start.ivp",
+        "startName" : "Log Task Occurrences",
+        "case" : { }
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 64 }
+      },
+      "connect" : { "id" : "f4", "to" : "f3" }
+    }, {
+      "id" : "f1",
+      "type" : "TaskEnd",
+      "visual" : {
+        "at" : { "x" : 368, "y" : 64 }
+      }
+    }, {
+      "id" : "f3",
+      "type" : "Script",
+      "name" : "Log Task Occurrences",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.processmining.service.IvyTaskOccurrenceService;",
+            "IvyTaskOccurrenceService.countTaskOccurrencesByProcessId(\"18F50FE911A453FA\");"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 240, "y" : 64 }
+      },
+      "connect" : { "id" : "f2", "to" : "f1" }
+    } ]
+}
