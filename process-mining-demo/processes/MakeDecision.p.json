@@ -80,7 +80,7 @@
       "id" : "f1",
       "type" : "TaskEnd",
       "visual" : {
-        "at" : { "x" : 640, "y" : 64 }
+        "at" : { "x" : 848, "y" : 64 }
       }
     }, {
       "id" : "f3",
@@ -106,21 +106,48 @@
       },
       "connect" : [
         { "id" : "f4", "to" : "f3", "condition" : "in.isApproved" },
-        { "id" : "f8", "to" : "f7", "via" : [ { "x" : 400, "y" : 176 } ] }
+        { "id" : "f10", "to" : "f9", "via" : [ { "x" : 400, "y" : 176 } ], "var" : "in1" }
       ]
     }, {
-      "id" : "f7",
-      "type" : "TaskSwitchEvent",
-      "name" : "Process Rejection",
+      "id" : "f9",
+      "type" : "TaskSwitchGateway",
       "config" : {
-        "task" : {
-          "name" : "Process Rejection"
+        "outLinks" : [ "TaskA.ivp", "TaskB.ivp" ],
+        "tasks" : {
+          "TaskA" : {
+            "name" : "Inform to requestor",
+            "responsible" : {
+              "role" : "SYSTEM"
+            }
+          },
+          "TaskB" : {
+            "name" : "Process Rejection"
+          }
         }
       },
       "visual" : {
-        "at" : { "x" : 520, "y" : 176 },
-        "labelOffset" : { "x" : 14, "y" : 34 }
+        "at" : { "x" : 496, "y" : 176 }
       },
-      "connect" : { "id" : "f6", "to" : "f1", "via" : [ { "x" : 640, "y" : 176 } ] }
+      "connect" : [
+        { "id" : "f8", "to" : "f7", "condition" : "ivp==\"TaskA.ivp\"" },
+        { "id" : "f13", "to" : "f11", "via" : [ { "x" : 496, "y" : 256 }, { "x" : 848, "y" : 256 } ], "condition" : "ivp==\"TaskB.ivp\"" }
+      ]
+    }, {
+      "id" : "f7",
+      "type" : "Script",
+      "name" : "Inform to requestor",
+      "visual" : {
+        "at" : { "x" : 664, "y" : 176 }
+      },
+      "connect" : { "id" : "f12", "to" : "f11" }
+    }, {
+      "id" : "f11",
+      "type" : "Alternative",
+      "visual" : {
+        "at" : { "x" : 848, "y" : 176 }
+      },
+      "connect" : [
+        { "id" : "f6", "to" : "f1" }
+      ]
     } ]
 }
