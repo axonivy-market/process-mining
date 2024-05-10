@@ -30,23 +30,27 @@
 				<p:commandButton
 					actionListener="#{searchingFlightBean.searchFlights(data.selectedFrom, data.selectedTo, data.selectedTime)}"
 					value="Search" update="form" />
+				<br />
 				<h:panelGroup
 					rendered="#{not searchingFlightBean.flights.isEmpty()}">
 					<h3>Please choose your flight:</h3>
-					<p:selectOneRadio value="#{data.flight}" layout="pageDirection">
+					<p:selectOneRadio value="#{searchingFlightBean.selectedFlightId}"
+						layout="pageDirection">
 						<f:selectItems value="#{searchingFlightBean.flights}" var="flight"
 							itemLabel="#{searchingFlightBean.generateLabelForFlight(flight)}"
 							itemValue="#{flight.id}" />
+						<p:ajax  update="form" />
 					</p:selectOneRadio>
 				</h:panelGroup>
-
 				<br />
+
 				<div class="command-btns">
 					<p:commandLink id="cancel"
 						actionListener="#{ivyWorkflowView.cancel()}" process="@this"
 						value="Cancel" />
 					<p:commandButton id="proceed" actionListener="#{logic.close}"
-						value="Proceed" update="form" icon="pi pi-check" />
+						value="Proceed" update="form" icon="pi pi-check"
+						disabled="#{searchingFlightBean.selectedFlightId == null}" />
 				</div>
 			</h:form>
 		</ui:define>

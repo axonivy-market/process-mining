@@ -10,7 +10,7 @@
 		<ui:define name="title">SubmitPersonalInformation</ui:define>
 		<ui:define name="content">
 
-			<h1>Submit your personal information</h1>
+			<h1>Submit your personal and payment information</h1>
 
 			<h:form id="form">
 				<p:messages />
@@ -28,7 +28,7 @@
 						actionListener="#{ivyWorkflowView.cancel()}" process="@this"
 						value="Cancel" />
 					<p:commandButton id="back" actionListener="#{logic.back}"
-						value="Back" />
+						value="Back" styleClass="p-mr-2" />
 					<p:commandButton id="proceed" actionListener="#{logic.close}"
 						value="Proceed" update="form" icon="pi pi-check" />
 				</div>

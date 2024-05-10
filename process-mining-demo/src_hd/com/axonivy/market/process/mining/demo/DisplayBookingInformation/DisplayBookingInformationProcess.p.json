@@ -34,7 +34,7 @@
     }, {
       "id" : "f3",
       "type" : "HtmlDialogEventStart",
-      "name" : "confirmPaid",
+      "name" : "proceed",
       "config" : {
         "guid" : "18F56E7BC174B23F"
       },

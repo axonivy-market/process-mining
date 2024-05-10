@@ -3,26 +3,33 @@
     <identifier>Everybody</identifier>
     <role>
         <identifier>Commercial</identifier>
+        <displayName>Commercial</displayName>
         <role>
             <identifier>Marketing</identifier>
+            <displayName>Marketing</displayName>
         </role>
         <role>
-            <identifier>Aviation planner</identifier>
+            <identifier>AviationPlanner</identifier>
+            <displayName>Aviation planner</displayName>
         </role>
     </role>
     <role>
         <identifier>Operation</identifier>
+        <displayName>Operation</displayName>
         <role>
-            <identifier>Flight operation</identifier>
+            <identifier>FlightOperation</identifier>
+            <displayName>Flight operation</displayName>
             <role>
                 <identifier>Pilot</identifier>
             </role>
             <role>
-                <identifier>Cabin crew</identifier>
+                <identifier>CabinCrew</identifier>
+                <displayName>Cabin crew</displayName>
             </role>
         </role>
         <role>
-            <identifier>Maintenance and Engineering</identifier>
+            <identifier>MaintenanceAndEngineering</identifier>
+            <displayName>Maintenance and Engineering</displayName>
         </role>
     </role>
 </role>

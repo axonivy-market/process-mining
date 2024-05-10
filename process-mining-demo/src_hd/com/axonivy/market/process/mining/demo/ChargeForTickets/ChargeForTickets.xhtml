@@ -19,9 +19,9 @@
 					<p:commandLink id="cancel"
 						actionListener="#{ivyWorkflowView.cancel()}" process="@this"
 						value="Cancel" />
-					<p:commandButton id="cancelTickets"
-						actionListener="#{logic.cancelTickets}" value="Cancel tickets"
-						icon="pi pi-check" />
+					<p:commandButton id="cancelTicket"
+						actionListener="#{logic.cancelTicket}" value="Cancel ticket"
+						icon="pi pi-times" styleClass="p-mr-2" />
 					<p:commandButton id="charge" actionListener="#{logic.charge}"
 						value="Charge" icon="pi pi-check" />
 				</div>

@@ -16,7 +16,7 @@
             { "name" : "flight", "type" : "String" }
           ],
           "map" : {
-            "result.flight" : "in.flight"
+            "result.flight" : "in.flightId"
           }
         },
         "guid" : "18F5139297FCC40E"

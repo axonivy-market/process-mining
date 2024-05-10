@@ -1,16 +1,9 @@
 FlightInformation #class
 com.axonivy.market.process.mining.demo.data #namespace
 planeRegistrationNumber String #field
-planeRegistrationNumber PERSISTENT #fieldModifier
 startTime java.time.LocalTime #field
-startTime PERSISTENT #fieldModifier
 endTime java.time.LocalTime #field
-endTime PERSISTENT #fieldModifier
 from String #field
-from PERSISTENT #fieldModifier
 to String #field
-to PERSISTENT #fieldModifier
 date java.util.Date #field
-date PERSISTENT #fieldModifier
 id String #field
-id PERSISTENT #fieldModifier

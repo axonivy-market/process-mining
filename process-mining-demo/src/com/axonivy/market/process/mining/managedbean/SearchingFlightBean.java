@@ -16,7 +16,7 @@ import com.axonivy.market.process.mining.demo.data.FlightInformation;
 @ManagedBean
 @ViewScoped
 public class SearchingFlightBean {
-
+	private String selectedFlightId;
 	private List<FlightInformation> flights = new ArrayList<>();
 
 	public void searchFlights(String from, String to, Date date) {
@@ -62,6 +62,14 @@ public class SearchingFlightBean {
 
 	public void setFlights(List<FlightInformation> flights) {
 		this.flights = flights;
+	}
+
+	public String getSelectedFlightId() {
+		return selectedFlightId;
+	}
+
+	public void setSelectedFlightId(String selectedFlightId) {
+		this.selectedFlightId = selectedFlightId;
 	}
 
 	public String generateLabelForFlight(FlightInformation flight) {

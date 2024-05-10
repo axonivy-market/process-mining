@@ -27,7 +27,7 @@
       "id" : "f1",
       "type" : "TaskEnd",
       "visual" : {
-        "at" : { "x" : 1416, "y" : 648 }
+        "at" : { "x" : 1456, "y" : 648 }
       }
     }, {
       "id" : "S10",
@@ -110,10 +110,10 @@
         }, {
           "id" : "S20-f1",
           "type" : "TaskSwitchEvent",
-          "name" : "Submit personal info",
+          "name" : "Submit personal and payment info",
           "config" : {
             "task" : {
-              "name" : "Submit Personal Info"
+              "name" : "Submit Personal and Payment Info"
             }
           },
           "visual" : {
@@ -131,8 +131,8 @@
             "output" : {
               "map" : {
                 "out" : "in",
-                "out.booking.isChargeLater" : "result.isChargeLater",
-                "out.isBackToSearchPage" : "result.isBackToSearchPage"
+                "out.isBackToSearchPage" : "result.isBackToSearchPage",
+                "out.isChargeLater" : "result.isChargeLater"
               }
             }
           },
@@ -151,15 +151,15 @@
         }, {
           "id" : "S20-f5",
           "type" : "TaskSwitchEvent",
-          "name" : "Rework submit personal info",
+          "name" : "Rework submit personal and payment info",
           "config" : {
             "task" : {
-              "name" : "Rework submit personal info"
+              "name" : "Rework for submit Personal and Payment Info"
             }
           },
           "visual" : {
             "at" : { "x" : 328, "y" : 344 },
-            "labelOffset" : { "x" : 113, "y" : 9 }
+            "labelOffset" : { "x" : 153, "y" : 9 }
           },
           "connect" : { "id" : "S20-f7", "to" : "S20-f3" }
         } ],
@@ -253,7 +253,7 @@
             }
           },
           "visual" : {
-            "at" : { "x" : 399, "y" : 258 },
+            "at" : { "x" : 399, "y" : 256 },
             "size" : { "width" : 159, "height" : 64 }
           },
           "connect" : { "id" : "S21-f0", "to" : "S21-g1" }
@@ -281,7 +281,7 @@
           "visual" : {
             "at" : { "x" : 512, "y" : 256 }
           },
-          "parentConnector" : "f9"
+          "parentConnector" : "f21"
         }, {
           "id" : "S22-f1",
           "type" : "TaskSwitchEvent",
@@ -318,10 +318,10 @@
           "connect" : { "id" : "S22-f0", "to" : "S22-g1" }
         } ],
       "visual" : {
-        "at" : { "x" : 1192, "y" : 768 },
+        "at" : { "x" : 1016, "y" : 768 },
         "size" : { "width" : 144, "height" : 60 }
       },
-      "connect" : { "id" : "f9", "to" : "f1", "via" : [ { "x" : 1416, "y" : 768 } ] }
+      "connect" : { "id" : "f21", "to" : "f11" }
     }, {
       "id" : "f12",
       "type" : "Alternative",
@@ -335,7 +335,7 @@
             "name" : "Yes",
             "segment" : 0.52,
             "offset" : { "x" : -8, "y" : -1 }
-          }, "condition" : "in.booking.isChargeLater" },
+          }, "condition" : "in.isChargeLater" },
         { "id" : "f15", "to" : "S23", "label" : {
             "name" : "No"
           } }
@@ -416,7 +416,7 @@
         "at" : { "x" : 1016, "y" : 648 },
         "size" : { "width" : 144, "height" : 60 }
       },
-      "connect" : { "id" : "f14", "to" : "S22", "via" : [ { "x" : 1016, "y" : 768 } ] }
+      "connect" : { "id" : "f14", "to" : "S22" }
     }, {
       "id" : "S25",
       "type" : "EmbeddedProcess",
@@ -464,7 +464,7 @@
           "connect" : { "id" : "S25-f0", "to" : "S25-g1" }
         } ],
       "visual" : {
-        "at" : { "x" : 1192, "y" : 544 },
+        "at" : { "x" : 1168, "y" : 544 },
         "size" : { "width" : 144, "height" : 60 }
       },
       "connect" : { "id" : "f16", "to" : "S60" }
@@ -473,7 +473,7 @@
       "type" : "Alternative",
       "name" : "Paid?",
       "visual" : {
-        "at" : { "x" : 1320, "y" : 648 },
+        "at" : { "x" : 1296, "y" : 648 },
         "labelOffset" : { "x" : 16, "y" : 40 }
       },
       "connect" : [
@@ -489,7 +489,7 @@
     }, {
       "id" : "S60",
       "type" : "EmbeddedProcess",
-      "name" : "Charge Tickets in case choose Charge Later option",
+      "name" : "Charge Ticket in case choose Charge Later option",
       "elements" : [ {
           "id" : "S60-g0",
           "type" : "EmbeddedStart",
@@ -508,10 +508,10 @@
         }, {
           "id" : "S60-f1",
           "type" : "TaskSwitchEvent",
-          "name" : "Charge for tickets",
+          "name" : "Charge for ticket",
           "config" : {
             "task" : {
-              "name" : "Charge for tickets"
+              "name" : "Charge for ticket"
             }
           },
           "visual" : {
@@ -539,10 +539,87 @@
           "connect" : { "id" : "S60-f0", "to" : "S60-g1" }
         } ],
       "visual" : {
-        "at" : { "x" : 1191, "y" : 392 },
+        "at" : { "x" : 1167, "y" : 392 },
         "size" : { "width" : 161, "height" : 62 }
       },
-      "connect" : { "id" : "f18", "to" : "f17", "via" : [ { "x" : 1320, "y" : 392 } ] }
+      "connect" : { "id" : "f18", "to" : "f17", "via" : [ { "x" : 1296, "y" : 392 } ] }
+    }, {
+      "id" : "f11",
+      "type" : "WaitEvent",
+      "name" : "Wait to send Email Reminder",
+      "config" : {
+        "timeoutConfig" : {
+          "duration" : "'10S'",
+          "action" : "continue"
+        },
+        "eventBeanClass" : "ch.ivyteam.ivy.process.intermediateevent.beans.FileIntermediateEventBean",
+        "eventIdConfig" : "\"wait\""
+      },
+      "visual" : {
+        "at" : { "x" : 1296, "y" : 768 },
+        "labelOffset" : { "x" : 25, "y" : 33 }
+      },
+      "connect" : { "id" : "f22", "to" : "S40" }
+    }, {
+      "id" : "S40",
+      "type" : "EmbeddedProcess",
+      "name" : "Send Email to reminder user about their Flight",
+      "elements" : [ {
+          "id" : "S40-g0",
+          "type" : "EmbeddedStart",
+          "visual" : {
+            "at" : { "x" : 40, "y" : 256 }
+          },
+          "parentConnector" : "f22",
+          "connect" : { "id" : "S40-f2", "to" : "S40-f1" }
+        }, {
+          "id" : "S40-g1",
+          "type" : "EmbeddedEnd",
+          "visual" : {
+            "at" : { "x" : 536, "y" : 256 }
+          },
+          "parentConnector" : "f9"
+        }, {
+          "id" : "S40-f1",
+          "type" : "TaskSwitchEvent",
+          "name" : "Send Email to reminder user about their Flight",
+          "config" : {
+            "task" : {
+              "name" : "Send Email to reminder user about their Flight",
+              "responsible" : {
+                "role" : "SYSTEM"
+              },
+              "skipTasklist" : true
+            }
+          },
+          "visual" : {
+            "at" : { "x" : 184, "y" : 256 },
+            "labelOffset" : { "x" : 17, "y" : 33 }
+          },
+          "connect" : { "id" : "S40-f4", "to" : "S40-f3" }
+        }, {
+          "id" : "S40-f3",
+          "type" : "EMail",
+          "name" : "Send Email to reminder user about their Flight",
+          "config" : {
+            "headers" : {
+              "emailSubject" : "Thanks",
+              "emailFrom" : "thanks@axonivy.com",
+              "emailTo" : "customer@gamil.com"
+            },
+            "message" : "Thanks!"
+          },
+          "visual" : {
+            "at" : { "x" : 408, "y" : 255 },
+            "size" : { "width" : 152, "height" : 63 }
+          },
+          "connect" : { "id" : "S40-f0", "to" : "S40-g1" }
+        } ],
+      "visual" : {
+        "at" : { "x" : 1456, "y" : 768 },
+        "size" : { "width" : 144, "height" : 60 }
+      },
+      "connect" : { "id" : "f9", "to" : "f1" }
     } ],
   "layout" : {
     "lanes" : [ {

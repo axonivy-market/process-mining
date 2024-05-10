@@ -49,7 +49,7 @@ public class PlanningFlightBean {
 				}
 			}
 			
-			IRole roleCabinCrew = Ivy.security().roles().find("Cabin crew");
+			IRole roleCabinCrew = Ivy.security().roles().find("CabinCrew");
 			if (roleCabinCrew != null) {
 				cabinCrews = new HashMap<>();
 				IPagedResult<IUser> userHasCabinCrewRolePageResult = roleCabinCrew.users().assignedPaged();

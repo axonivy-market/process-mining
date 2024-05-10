@@ -57,7 +57,7 @@
     }, {
       "id" : "f6",
       "type" : "HtmlDialogEventStart",
-      "name" : "cancelTickets",
+      "name" : "cancelTicket",
       "config" : {
         "guid" : "18F571938F0621E5",
         "output" : {
