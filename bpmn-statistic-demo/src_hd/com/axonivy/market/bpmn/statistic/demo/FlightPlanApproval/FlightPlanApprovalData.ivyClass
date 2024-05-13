@@ -1,0 +1,4 @@
+FlightPlanApprovalData #class
+com.axonivy.market.bpmn.statistic.demo.FlightPlanApproval #namespace
+isManagerApprove Boolean #field
+isManagerApprove PERSISTENT #fieldModifier

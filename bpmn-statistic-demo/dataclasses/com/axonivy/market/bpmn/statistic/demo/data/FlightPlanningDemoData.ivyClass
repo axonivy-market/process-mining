@@ -1,0 +1,4 @@
+FlightPlanningDemoData #class
+com.axonivy.market.bpmn.statistic.demo.data #namespace
+isManagerApprove Boolean #field
+isEngineeringApproveAircraft Boolean #field

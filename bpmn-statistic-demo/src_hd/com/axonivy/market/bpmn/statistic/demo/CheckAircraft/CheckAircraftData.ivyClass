@@ -1,0 +1,4 @@
+CheckAircraftData #class
+com.axonivy.market.bpmn.statistic.demo.CheckAircraft #namespace
+isEngineeringApproveAircraft Boolean #field
+isEngineeringApproveAircraft PERSISTENT #fieldModifier
