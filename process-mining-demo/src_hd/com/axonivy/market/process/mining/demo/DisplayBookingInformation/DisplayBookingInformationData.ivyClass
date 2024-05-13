@@ -1,4 +1,0 @@
-DisplayBookingInformationData #class
-com.axonivy.market.process.mining.demo.DisplayBookingInformation #namespace
-isBackToSubmitInformationPage Boolean #field
-isBackToSubmitInformationPage PERSISTENT #fieldModifier

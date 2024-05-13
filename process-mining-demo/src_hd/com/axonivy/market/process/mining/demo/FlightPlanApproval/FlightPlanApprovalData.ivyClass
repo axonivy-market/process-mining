@@ -1,4 +1,0 @@
-FlightPlanApprovalData #class
-com.axonivy.market.process.mining.demo.FlightPlanApproval #namespace
-isManagerApprove Boolean #field
-isManagerApprove PERSISTENT #fieldModifier

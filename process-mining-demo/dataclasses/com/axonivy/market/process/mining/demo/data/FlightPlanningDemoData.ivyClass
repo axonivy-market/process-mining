@@ -1,4 +1,0 @@
-FlightPlanningDemoData #class
-com.axonivy.market.process.mining.demo.data #namespace
-isManagerApprove Boolean #field
-isEngineeringApproveAircraft Boolean #field
