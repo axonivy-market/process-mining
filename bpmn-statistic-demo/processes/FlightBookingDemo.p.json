@@ -281,7 +281,7 @@
           "visual" : {
             "at" : { "x" : 512, "y" : 256 }
           },
-          "parentConnector" : "f21"
+          "parentConnector" : "f11"
         }, {
           "id" : "S22-f1",
           "type" : "TaskSwitchEvent",
@@ -321,7 +321,7 @@
         "at" : { "x" : 1016, "y" : 768 },
         "size" : { "width" : 144, "height" : 60 }
       },
-      "connect" : { "id" : "f21", "to" : "f11" }
+      "connect" : { "id" : "f11", "to" : "S40" }
     }, {
       "id" : "f12",
       "type" : "Alternative",
@@ -544,23 +544,6 @@
       },
       "connect" : { "id" : "f18", "to" : "f17", "via" : [ { "x" : 1296, "y" : 392 } ] }
     }, {
-      "id" : "f11",
-      "type" : "WaitEvent",
-      "name" : "Wait to send Email Reminder",
-      "config" : {
-        "timeoutConfig" : {
-          "duration" : "'10S'",
-          "action" : "continue"
-        },
-        "eventBeanClass" : "ch.ivyteam.ivy.process.intermediateevent.beans.FileIntermediateEventBean",
-        "eventIdConfig" : "\"wait\""
-      },
-      "visual" : {
-        "at" : { "x" : 1296, "y" : 768 },
-        "labelOffset" : { "x" : 25, "y" : 33 }
-      },
-      "connect" : { "id" : "f22", "to" : "S40" }
-    }, {
       "id" : "S40",
       "type" : "EmbeddedProcess",
       "name" : "Send Email to reminder user about their Flight",
@@ -570,7 +553,7 @@
           "visual" : {
             "at" : { "x" : 40, "y" : 256 }
           },
-          "parentConnector" : "f22",
+          "parentConnector" : "f11",
           "connect" : { "id" : "S40-f2", "to" : "S40-f1" }
         }, {
           "id" : "S40-g1",
