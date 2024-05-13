@@ -1,23 +1,21 @@
 package com.axonivy.processmining.bo;
 
-import java.util.Set;
-
 public class TaskOccurrence {
-	private Set<String> requestPaths;
+	private Long startSwitchEventId;
 	private Integer occurrence;
 
-	public TaskOccurrence(Set<String> requestPaths, Integer occurrence) {
+	public TaskOccurrence(Long startSwitchEventId, Integer occurrence) {
 		super();
-		this.requestPaths = requestPaths;
+		this.startSwitchEventId = startSwitchEventId;
 		this.occurrence = occurrence;
 	}
 
-	public Set<String> getRequestPaths() {
-		return requestPaths;
+	public Long getStartSwitchEventId() {
+		return startSwitchEventId;
 	}
 
-	public void setRequestPaths(Set<String> requestPaths) {
-		this.requestPaths = requestPaths;
+	public void setStartSwitchEventId(Long startSwitchEventId) {
+		this.startSwitchEventId = startSwitchEventId;
 	}
 
 	public Integer getOccurrence() {
