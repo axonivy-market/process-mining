@@ -58,7 +58,8 @@
 				<ic:com.axonivy.utils.bpmnstatistic.ProcessViewer
 					processViewerId="process-diagram-iframe"
 					srcUrl="#{processesMonitorBean.selectedProcessDiagramUrl}" 
-					showStatisticCommand="#{processesMonitorBean.showStatisticData()}"/>
+					actionListener="#{processesMonitorBean.showStatisticData()}"
+					bean="#{processesMonitorBean}"/>
 				<!-- 				<p:dialog id="process-diagram-dialog" modal="true" draggable="true"
 					resizable="true" widgetVar="process-diagram-dialog-var"
 					minHeight="960" minWidth="1024"

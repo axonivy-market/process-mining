@@ -20,8 +20,6 @@ function getProcessDiagramIframe() {
 }
 
 function addElementFrequency(elementId, frequencyRatio) {
-console.log(elementId);
-console.log(frequencyRatio);
   getProcessDiagramIframe()
     .find(`#sprotty_${elementId}`)
     .append(
@@ -34,4 +32,20 @@ console.log(frequencyRatio);
     );
 }
 
-function addElementsFrequency() {}
+function loadIframe(recheckIndicator) {
+  var iframe = $("#process-diagram-iframe");
+  if (!recheckIndicator) {
+    $(iframe).on('load', function () {
+    });
+  }
+  else {
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    if (iframeDoc.readyState == 'complete') {
+      santizeDiagram();
+      clearTimeout(recheckFrameTimer);
+      return;
+    }
+  }
+  recheckFrameTimer = setTimeout(function () { loadIframe(true); }, 500);
+
+}
