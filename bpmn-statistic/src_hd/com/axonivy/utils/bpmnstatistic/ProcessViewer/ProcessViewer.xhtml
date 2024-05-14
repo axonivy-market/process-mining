@@ -7,14 +7,23 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 <cc:interface componentType="IvyComponent">
+	<cc:attribute name="processViewerId" required="true" />
+	<cc:attribute name="srcUrl" required="true" />
 </cc:interface>
 
 <cc:implementation>
 	<ui:define name="content">
 		<h:outputScript name="process-viewer.js" target="head"></h:outputScript>
-		<iframe id="process-diagram-iframe" name="process-diagram-iframe"
-			height="960" width="1024"
-			src="#{processViewBean.selectedProcessDiagramUrl}" />
+		<h:panelGroup>
+			<iframe id="#{cc.attrs.processViewerId}"
+				name="#{cc.attrs.processViewerId}" height="960" width="1024"
+				src="#{cc.attrs.srcUrl}" />
+			<div class="command-btns">
+					<p:commandButton id="show-statistic-btn"
+						onclick="santizeDiagram()" value="Show statistic"
+						icon="pi pi-check" />
+				</div>
+		</h:panelGroup>
 
 	</ui:define>
 	<!-- fields needs to be inside a h:form tag (which is normaly added by the outer page) -->
