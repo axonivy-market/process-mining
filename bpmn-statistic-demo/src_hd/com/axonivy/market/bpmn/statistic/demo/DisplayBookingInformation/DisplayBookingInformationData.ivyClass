@@ -1,4 +1,0 @@
-DisplayBookingInformationData #class
-com.axonivy.market.bpmn.statistic.demo.DisplayBookingInformation #namespace
-isBackToSubmitInformationPage Boolean #field
-isBackToSubmitInformationPage PERSISTENT #fieldModifier

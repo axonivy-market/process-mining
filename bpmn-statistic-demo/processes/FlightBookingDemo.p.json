@@ -2,7 +2,7 @@
   "format" : "10.0.0",
   "id" : "18F3D6C205210455",
   "config" : {
-    "data" : "com.axonivy.market.bpmn.statistic.demo.data.FlightBookingDemoData"
+    "data" : "com.axonivy.utils.bpmnstatistic.demo.data.FlightBookingDemoData"
   },
   "elements" : [ {
       "id" : "f0",
@@ -53,7 +53,7 @@
           "type" : "DialogCall",
           "name" : "Search for a Flight",
           "config" : {
-            "dialogId" : "com.axonivy.market.bpmn.statistic.demo.SearchingFlight",
+            "dialogId" : "com.axonivy.utils.bpmnstatistic.demo.SearchingFlight",
             "startMethod" : "start()"
           },
           "visual" : {
@@ -126,7 +126,7 @@
           "type" : "DialogCall",
           "name" : "Submit personal information",
           "config" : {
-            "dialogId" : "com.axonivy.market.bpmn.statistic.demo.SubmitPersonalInformation",
+            "dialogId" : "com.axonivy.utils.bpmnstatistic.demo.SubmitPersonalInformation",
             "startMethod" : "start()",
             "output" : {
               "map" : {
@@ -243,7 +243,7 @@
           "type" : "DialogCall",
           "name" : "DisplayBookingInformation",
           "config" : {
-            "dialogId" : "com.axonivy.market.bpmn.statistic.demo.DisplayBookingInformation",
+            "dialogId" : "com.axonivy.utils.bpmnstatistic.demo.DisplayBookingInformation",
             "startMethod" : "start()",
             "output" : {
               "map" : {
@@ -524,7 +524,7 @@
           "type" : "DialogCall",
           "name" : "ChargeForTickets",
           "config" : {
-            "dialogId" : "com.axonivy.market.bpmn.statistic.demo.ChargeForTickets",
+            "dialogId" : "com.axonivy.utils.bpmnstatistic.demo.ChargeForTickets",
             "startMethod" : "start()",
             "output" : {
               "map" : {

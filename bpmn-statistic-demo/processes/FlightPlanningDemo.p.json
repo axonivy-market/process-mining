@@ -2,7 +2,7 @@
   "format" : "10.0.0",
   "id" : "18F3D6D7AEE204DA",
   "config" : {
-    "data" : "com.axonivy.market.bpmn.statistic.demo.data.FlightPlanningDemoData"
+    "data" : "com.axonivy.utils.bpmnstatistic.demo.data.FlightPlanningDemoData"
   },
   "elements" : [ {
       "id" : "f0",
@@ -55,7 +55,7 @@
           "type" : "DialogCall",
           "name" : "Planning a Flight",
           "config" : {
-            "dialogId" : "com.axonivy.market.bpmn.statistic.demo.PlanningFlight",
+            "dialogId" : "com.axonivy.utils.bpmnstatistic.demo.PlanningFlight",
             "startMethod" : "start()"
           },
           "visual" : {
@@ -119,7 +119,7 @@
           "type" : "DialogCall",
           "name" : "FlightPlanApproval",
           "config" : {
-            "dialogId" : "com.axonivy.market.bpmn.statistic.demo.FlightPlanApproval",
+            "dialogId" : "com.axonivy.utils.bpmnstatistic.demo.FlightPlanApproval",
             "startMethod" : "start()",
             "output" : {
               "map" : {
@@ -192,7 +192,7 @@
           "type" : "DialogCall",
           "name" : "CheckAircraft",
           "config" : {
-            "dialogId" : "com.axonivy.market.bpmn.statistic.demo.CheckAircraft",
+            "dialogId" : "com.axonivy.utils.bpmnstatistic.demo.CheckAircraft",
             "startMethod" : "start()",
             "output" : {
               "map" : {
@@ -405,7 +405,7 @@
           "type" : "DialogCall",
           "name" : "RecommendDestination",
           "config" : {
-            "dialogId" : "com.axonivy.market.bpmn.statistic.demo.RecommendDestination",
+            "dialogId" : "com.axonivy.utils.bpmnstatistic.demo.RecommendDestination",
             "startMethod" : "start()"
           },
           "visual" : {
