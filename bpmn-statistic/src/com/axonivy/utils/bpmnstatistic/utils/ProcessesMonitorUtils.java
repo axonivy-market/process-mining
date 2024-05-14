@@ -1,4 +1,5 @@
 package com.axonivy.utils.bpmnstatistic.utils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,4 +45,5 @@ public class ProcessesMonitorUtils {
 		String relativeEncoded = process.getLink().getRelativeEncoded();
 		return !StringUtils.endsWithAny(relativeEncoded, PORTAL_START_REQUEST_PATH, PORTAL_IN_TEAMS_REQUEST_PATH);
 	}
+	
 }

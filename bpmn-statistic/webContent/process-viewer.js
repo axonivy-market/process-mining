@@ -13,9 +13,6 @@ function removeDefaultFrequency() {
 function santizeDiagram() {
   removeDefaultFrequency();
   removeExecutedClass();
-  addElementFrequency("18F4D3E3B39C44F1-f3", "2");
-  addElementFrequency("18F4D3E3B39C44F1-f0", "2");
-  addElementFrequency("18F4D3E3B39C44F1-f1", "2");
 }
 
 function getProcessDiagramIframe() {
@@ -23,6 +20,8 @@ function getProcessDiagramIframe() {
 }
 
 function addElementFrequency(elementId, frequencyRatio) {
+console.log(elementId);
+console.log(frequencyRatio);
   getProcessDiagramIframe()
     .find(`#sprotty_${elementId}`)
     .append(

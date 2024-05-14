@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,8 +16,10 @@ import javax.faces.bean.ViewScoped;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.PF;
 
+import com.axonivy.utils.bpmnstatistic.service.IvyTaskOccurrenceService;
 import com.axonivy.utils.bpmnstatistic.utils.ProcessesMonitorUtils;
 
+import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.process.viewer.api.ProcessViewer;
 import ch.ivyteam.ivy.workflow.start.IProcessWebStartable;
 import ch.ivyteam.ivy.workflow.start.IWebStartable;
@@ -29,6 +32,7 @@ public class ProcessesMonitorBean {
 	private Map<String, List<IProcessWebStartable>> processesMap = new HashMap<>();
 	private String selectedProcessDiagramUrl;
 	private String selectedProcessPidId;
+	private static final String UPDATE_FREQUENCY_COUNT_FOR_TASK = "addElementFrequency(%s, %s)";
 
 	@PostConstruct
 	private void init() {
@@ -48,18 +52,17 @@ public class ProcessesMonitorBean {
 			});
 		}
 	}
-//
-//	private void sanitizeProcessDiagramByjquery() {
-//		ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
-//
-//		try {
-//			engine.eval(new FileReader("C:/Scripts/Jsfunctions.js"));
-//			Invocable invocable = (Invocable) engine;
-//			invocable.invokeFunction("santizeDiagram");
-//		} catch (Exception e) {
-//			Ivy.log().error(e.getMessage());
-//		}
-//	}
+	
+	public void showStatisticData() {
+		if(StringUtils.isNoneBlank(selectedProcessPidId)) {
+			HashMap<String, Integer> taskCount = IvyTaskOccurrenceService.countTaskOccurrencesByProcessId(selectedProcessDiagramUrl);
+			for(Entry<String, Integer> entry : taskCount.entrySet()) {
+				String script = String.format(UPDATE_FREQUENCY_COUNT_FOR_TASK, entry.getKey(), entry.getValue());
+				Ivy.log().warn(script);
+				PF.current().executeScript(String.format(UPDATE_FREQUENCY_COUNT_FOR_TASK, entry.getKey(), entry.getValue()));
+			}
+		}  
+	}
 
 	public IProcessWebStartable getSelectedIProcessWebStartable() {
 		return processesMap.get(selectedModuleName).stream()
