@@ -1,4 +1,0 @@
-MakeDecisionData #class
-com.axon.market.process.mining.demo.MakeDecision #namespace
-isApproved Boolean #field
-isApproved PERSISTENT #fieldModifier

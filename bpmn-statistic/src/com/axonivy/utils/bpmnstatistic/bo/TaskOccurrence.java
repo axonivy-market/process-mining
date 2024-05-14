@@ -1,4 +1,4 @@
-package com.axonivy.processmining.bo;
+package com.axonivy.utils.bpmnstatistic.bo;
 
 public class TaskOccurrence {
 	private Long startSwitchEventId;

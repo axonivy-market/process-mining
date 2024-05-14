@@ -1,4 +1,4 @@
-package com.axonivy.processmining.service;
+package com.axonivy.utils.bpmnstatistic.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,8 +7,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.axonivy.processmining.bo.TaskOccurrence;
-import com.axonivy.processmining.enums.IvyVariable;
+import com.axonivy.utils.bpmnstatistic.bo.TaskOccurrence;
+import com.axonivy.utils.bpmnstatistic.enums.IvyVariable;
 
 import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.security.exec.Sudo;
@@ -24,14 +24,7 @@ public class IvyTaskOccurrenceService {
 
 	public static HashMap<String, Integer> countTaskOccurrencesByProcessId(String processId) {
 		HashMap<String, TaskOccurrence> taskOccurrenceMap = getHashMapTaskOccurrencesByProcessId(processId);
-		HashMap<String, Integer> result = correctTaskOccurrences(taskOccurrenceMap);
-		// TODO: This block code is used for verification
-		// We will remove it when verification is finished
-		for (Map.Entry<String, Integer> taskOccurrence : result.entrySet()) {
-			Ivy.log().warn("Task {0} occurs {1} times", taskOccurrence.getKey(), taskOccurrence.getValue());
-		}
-
-		return result;
+		return correctTaskOccurrences(taskOccurrenceMap);
 	}
 
 	private static HashMap<String, TaskOccurrence> getHashMapTaskOccurrencesByProcessId(String processId) {
@@ -84,7 +77,7 @@ public class IvyTaskOccurrenceService {
 		TaskOccurrence taskOccurrence = taskOccurrenceMap.get(taskElementId);
 		if (taskOccurrence != null) {
 			if (startTaskSwitchEventId != null
-					&& taskOccurrence.getStartSwitchEventId().longValue() != startTaskSwitchEventId.longValue()) {
+					&& !taskOccurrence.getStartSwitchEventId().equals(startTaskSwitchEventId)) {
 				taskOccurrence.setOccurrence(taskOccurrence.getOccurrence() + 1);
 				taskOccurrence.setStartSwitchEventId(startTaskSwitchEventId);
 			}

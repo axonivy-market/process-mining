@@ -1,4 +1,4 @@
-package com.axonivy.processmining.enums;
+package com.axonivy.utils.bpmnstatistic.enums;
 
 public enum IvyVariable {
 	MAX_QUERY_RESULTS("maxQueryResults");
