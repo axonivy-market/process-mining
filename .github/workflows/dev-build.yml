@@ -33,8 +33,17 @@ jobs:
           done
           echo BUILT_MODULES=${modules[@]} >> $GITHUB_OUTPUT
       - name: Archive build artifact
+        run: |
+          zip -r bpmn-statistic-artifacts.zip */target/*.iar
+      - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
           name: bpmn-statistic-artifacts
-          path: |
-            */target/*.iar
+          path: bpmn-statistic-artifacts.zip
+      - name: Deploy build
+        run: |
+          mvn com.axonivy.ivy.ci:project-build-plugin:10.0.14:deploy-to-engine
+          -Divy.deploy.file=bpmn-statistic-artifacts.zip
+          -Divy.deploy.method=HTTP
+          -Divy.deploy.engine.url=http://10.193.8.78:8080/ivy
+          -Divy.deploy.engine.app=BPMN
