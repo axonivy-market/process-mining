@@ -27,16 +27,11 @@ jobs:
         id: build-maven
         run: |
           modules=("bpmn-statistic" "bpmn-statistic-demo")
-          builtModules=()
-          filesChange=$(git diff --name-only HEAD HEAD^)
           for module in ${modules[@]}
           do
-            if [[ "$filesChange" =~ .*"$module".* ]]; then
-              builtModules+=("$module")
-              mvn clean install -f $module/pom.xml
-            fi
+            mvn clean install -f $module/pom.xml
           done
-          echo BUILT_MODULES=${builtModules[@]} >> $GITHUB_OUTPUT
+          echo BUILT_MODULES=${modules[@]} >> $GITHUB_OUTPUT
       - name: Archive build artifact
         uses: actions/upload-artifact@v3
         with:
