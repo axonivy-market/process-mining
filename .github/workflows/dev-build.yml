@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 jobs:
   dev_build:
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout current branch
         uses: actions/checkout@v3
