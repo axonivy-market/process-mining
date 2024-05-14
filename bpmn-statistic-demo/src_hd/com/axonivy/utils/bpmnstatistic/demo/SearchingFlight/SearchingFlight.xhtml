@@ -1,0 +1,60 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:ic="http://ivyteam.ch/jsf/component"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:body>
+	<ui:composition template="/layouts/frame-10.xhtml">
+		<ui:define name="title">SearchingFlight</ui:define>
+		<ui:define name="content">
+
+			<h1>Search for a flight</h1>
+
+			<h:form id="form">
+				<p:messages />
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="ui-panelgrid-blank ui-fluid"
+					columnClasses="ui-g-12 ui-md-3 ui-lg-2, ui-g-12 ui-md-9 ui-lg-4, ui-g-12 ui-md-3 ui-lg-2, ui-g-12 ui-md-9 ui-lg-4">
+					<p:outputLabel value="From" for="@next" />
+					<p:inputText value="#{data.selectedFrom}" />
+
+					<p:outputLabel value="To" for="@next" />
+					<p:inputText value="#{data.selectedTo}" />
+
+					<p:outputLabel value="Date" for="@next" />
+					<p:datePicker value="#{data.selectedTime}" />
+				</p:panelGrid>
+
+				<p:commandButton
+					actionListener="#{searchingFlightBean.searchFlights(data.selectedFrom, data.selectedTo, data.selectedTime)}"
+					value="Search" update="form" />
+				<br />
+				<h:panelGroup
+					rendered="#{not searchingFlightBean.flights.isEmpty()}">
+					<h3>Please choose your flight:</h3>
+					<p:selectOneRadio value="#{searchingFlightBean.selectedFlightId}"
+						layout="pageDirection">
+						<f:selectItems value="#{searchingFlightBean.flights}" var="flight"
+							itemLabel="#{searchingFlightBean.generateLabelForFlight(flight)}"
+							itemValue="#{flight.id}" />
+						<p:ajax update="form" />
+					</p:selectOneRadio>
+				</h:panelGroup>
+				<br />
+
+				<div class="command-btns">
+					<p:commandLink id="cancel"
+						actionListener="#{ivyWorkflowView.cancel()}" process="@this"
+						value="Cancel" />
+					<p:commandButton id="proceed" actionListener="#{logic.close}"
+						value="Proceed" update="form" icon="pi pi-check"
+						disabled="#{searchingFlightBean.selectedFlightId == null}" />
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>
