@@ -2,7 +2,7 @@
   "format" : "10.0.0",
   "id" : "18F27F5993C5C579",
   "config" : {
-    "data" : "com.axonivy.process.mining.demo.Data"
+    "data" : "com.axonivy.utils.bpmnstatistic.demo.Data"
   },
   "elements" : [ {
       "id" : "f0",
@@ -26,9 +26,9 @@
     }, {
       "id" : "f3",
       "type" : "DialogCall",
-      "name" : "Demo",
+      "name" : "ProcessesMonitor",
       "config" : {
-        "dialogId" : "com.axonivy.process.mining.demo.Demo",
+        "dialogId" : "com.axonivy.utils.bpmnstatistic.demo.ProcessesMonitor",
         "startMethod" : "start()"
       },
       "visual" : {

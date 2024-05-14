@@ -1,5 +1,4 @@
-package com.axonivy.process.mining.demo.ui.util;
-
+package com.axonivy.utils.bpmnstatistic.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,19 +10,18 @@ import org.apache.commons.lang3.StringUtils;
 import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.workflow.start.IProcessWebStartable;
 import ch.ivyteam.ivy.workflow.start.IWebStartable;
-
-public class ProcessUtils {
-	private static ProcessUtils instance;
+public class ProcessesMonitorUtils {
+	private static ProcessesMonitorUtils instance;
 	private static final String PORTAL_START_REQUEST_PATH = "/DefaultApplicationHomePage.ivp";
 	private static final String PORTAL_IN_TEAMS_REQUEST_PATH = "InTeams.ivp";
 
-	private ProcessUtils() {
+	private ProcessesMonitorUtils() {
 	};
 
-	public static ProcessUtils getInstance() {
+	public static ProcessesMonitorUtils getInstance() {
 
 		if (instance == null) {
-			instance = new ProcessUtils();
+			instance = new ProcessesMonitorUtils();
 		}
 		return instance;
 	}

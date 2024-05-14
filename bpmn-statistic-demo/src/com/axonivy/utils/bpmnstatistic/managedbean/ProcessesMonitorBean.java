@@ -1,4 +1,4 @@
-package com.axonivy.process.mining.demo.ui.bean;
+package com.axonivy.utils.bpmnstatistic.managedbean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import javax.faces.bean.ViewScoped;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.PF;
 
-import com.axonivy.process.mining.demo.ui.util.ProcessUtils;
+import com.axonivy.utils.bpmnstatistic.utils.ProcessesMonitorUtils;
 
 import ch.ivyteam.ivy.process.viewer.api.ProcessViewer;
 import ch.ivyteam.ivy.workflow.start.IProcessWebStartable;
@@ -23,7 +23,7 @@ import ch.ivyteam.ivy.workflow.start.IWebStartable;
 
 @ManagedBean
 @ViewScoped
-public class ProcessViewBean {
+public class ProcessesMonitorBean {
 	private String selectedProcessName;
 	private String selectedModuleName;
 	private Map<String, List<IProcessWebStartable>> processesMap = new HashMap<>();
@@ -32,7 +32,7 @@ public class ProcessViewBean {
 
 	@PostConstruct
 	private void init() {
-		processesMap = ProcessUtils.getInstance().getProcessesWithPmv();
+		processesMap = ProcessesMonitorUtils.getInstance().getProcessesWithPmv();
 	}
 
 	public void confirm() {

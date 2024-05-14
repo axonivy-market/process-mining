@@ -3,7 +3,7 @@
   "id" : "18F27D5B676791CC",
   "kind" : "HTML_DIALOG",
   "config" : {
-    "data" : "com.axonivy.process.mining.demo.Demo.DemoData"
+    "data" : "com.axonivy.utils.bpmnstatistic.demo.ProcessesMonitor.ProcessesMonitorData"
   },
   "elements" : [ {
       "id" : "f0",
