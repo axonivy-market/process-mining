@@ -19,27 +19,27 @@ function getProcessDiagramIframe() {
   return $("#process-diagram-iframe").contents();
 }
 
-function addElementFrequency(elementId, frequencyRatio) {
+function addElementFrequency(elementId, frequencyRatio, backgroundColor, textColor) {
   getProcessDiagramIframe()
     .find(`#sprotty_${elementId}`)
     .append(
       `<svg>
         <g>
-          <rect rx="7" ry="7" x="19" y="20" width="30" height="14" class="execution-badge">
-          </rect><text x="34" y="26" dy=".4em" class="execution-text">${frequencyRatio}</text>
+          <rect rx="7" ry="7" x="19" y="20" width="30" height="14" style="fill: rgb(${backgroundColor})"></rect>
+          <text x="34" y="26" dy=".4em" style="fill: rgb(${textColor})">${frequencyRatio}</text>
         </g>
       </svg>`
     );
 }
 
 function loadIframe(recheckIndicator) {
-  var iframe = $("#process-diagram-iframe");
+  var iframe = document.getElementById("process-diagram-iframe");
   if (!recheckIndicator) {
     $(iframe).on('load', function () {
     });
   }
   else {
-    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    const iframeDoc = iframe.contentDocument;
     if (iframeDoc.readyState == 'complete') {
       santizeDiagram();
       clearTimeout(recheckFrameTimer);
@@ -47,5 +47,4 @@ function loadIframe(recheckIndicator) {
     }
   }
   recheckFrameTimer = setTimeout(function () { loadIframe(true); }, 500);
-
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,9 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.PF;
 
-import com.axonivy.utils.bpmnstatistic.service.IvyTaskOccurrenceService;
 import com.axonivy.utils.bpmnstatistic.utils.ProcessesMonitorUtils;
 
 import ch.ivyteam.ivy.process.viewer.api.ProcessViewer;
@@ -26,21 +23,15 @@ import ch.ivyteam.ivy.workflow.start.IWebStartable;
 @ManagedBean
 @ViewScoped
 public class ProcessesMonitorBean {
+	private Map<String, List<IProcessWebStartable>> processesMap = new HashMap<>();
 	private String selectedProcessName;
 	private String selectedModuleName;
-	private Map<String, List<IProcessWebStartable>> processesMap = new HashMap<>();
 	private String selectedProcessDiagramUrl;
 	private String selectedProcessPidId;
-	private static final String UPDATE_FREQUENCY_COUNT_FOR_TASK = "addElementFrequency('%s', '%s');";
 
 	@PostConstruct
 	private void init() {
 		processesMap = ProcessesMonitorUtils.getInstance().getProcessesWithPmv();
-	}
-
-	public void confirm() {
-		// execute script to sanitize data
-		PF.current().executeScript("PF('process-diagram-dialog-var').show()");
 	}
 
 	public void onChangeSelectedProcessName() {
@@ -51,20 +42,14 @@ public class ProcessesMonitorBean {
 			});
 		}
 	}
-	
-	public void show() {
+
+	public void showStatisticData() {
 		if (StringUtils.isNoneBlank(selectedProcessPidId)) {
-			HashMap<String, Integer> taskCount = IvyTaskOccurrenceService
-					.countTaskOccurrencesByProcessId(selectedProcessDiagramUrl);
-			taskCount.put("18F3D6C205210455-S10-f8", 1);
-			for (Entry<String, Integer> entry : taskCount.entrySet()) {
-				PF.current().executeScript(
-						String.format(UPDATE_FREQUENCY_COUNT_FOR_TASK, entry.getKey(), entry.getValue()));
-			}
+			ProcessesMonitorUtils.getInstance().showStatisticData(selectedProcessPidId);
 		}
 	}
 
-	public IProcessWebStartable getSelectedIProcessWebStartable() {
+	private IProcessWebStartable getSelectedIProcessWebStartable() {
 		return processesMap.get(selectedModuleName).stream()
 				.filter(process -> process.getDisplayName().equalsIgnoreCase(selectedProcessName)).findAny()
 				.orElse(null);
