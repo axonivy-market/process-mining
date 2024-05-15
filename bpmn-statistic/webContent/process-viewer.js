@@ -34,11 +34,7 @@ function addElementFrequency(elementId, frequencyRatio, backgroundColor, textCol
 
 function loadIframe(recheckIndicator) {
   var iframe = document.getElementById("process-diagram-iframe");
-  if (!recheckIndicator) {
-    $(iframe).on('load', function () {
-    });
-  }
-  else {
+  if (recheckIndicator) {
     const iframeDoc = iframe.contentDocument;
     if (iframeDoc.readyState == 'complete') {
       santizeDiagram();
