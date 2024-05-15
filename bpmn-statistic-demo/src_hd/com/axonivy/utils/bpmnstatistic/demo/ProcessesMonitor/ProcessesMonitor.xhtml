@@ -13,7 +13,7 @@
 				#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/PageHearder')}
 			</h3>
 			<h:form id="form">
-				<p:fieldset legend="">
+				<p:fieldset legend="#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/ProcessInformation')}">
 					<div class="ui-fluid ">
 						<div class="p-field p-grid p-align-baseline">
 							<h:panelGroup layout="block">
@@ -58,15 +58,8 @@
 				<ic:com.axonivy.utils.bpmnstatistic.ProcessViewer
 					processViewerId="process-diagram-iframe"
 					srcUrl="#{processesMonitorBean.selectedProcessDiagramUrl}" 
-					actionListener="#{processesMonitorBean.showStatisticData()}"/>
-				<!-- 				<p:dialog id="process-diagram-dialog" modal="true" draggable="true"
-					resizable="true" widgetVar="process-diagram-dialog-var"
-					minHeight="960" minWidth="1024"
-					header="#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/ProcessViewer')}">
-					<iframe id="process-diagram-iframe" name="process-diagram-iframe"
-					height="960" width="1024"
-					src="#{processesMonitorBean.selectedProcessDiagramUrl}" />
-				</p:dialog> -->
+					actionListener="#{processesMonitorBean.showStatisticData()}"
+					btnLabel="${ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/ShowStatistic')}"/>
 			</h:form>
 		</ui:define>
 	</ui:composition>

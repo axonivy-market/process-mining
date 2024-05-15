@@ -12,8 +12,7 @@
 	<cc:attribute name="processViewerId" required="true" />
 	<cc:attribute name="srcUrl" required="true" />
 	<cc:attribute name="actionListener" required="true" />
-
-
+	<cc:attribute name="btnLabel" required="true" />
 </cc:interface>
 
 <cc:implementation>
@@ -26,7 +25,7 @@
 
 			<p:commandButton id="show-statistic-btn"
 				actionListener="#{cc.attrs.actionListener}"
-				value="Show statistic"
+				value="#{cc.attrs.btnLabel}"
 				icon="pi pi-check" />
 		</div>
 	</h:panelGroup>

@@ -8,6 +8,8 @@ Dialogs:
               PageHearder: Process Monitor Page
               PleaseSelectModule: Please select a module
               PleaseSelectProcess: Please select a process
+              ProcessInformation: Process Information
               ProcessViewer: Process Viewer
               RequireMessage: Please select a process
+              ShowStatistic: Show Statistic
               Title: Process Mining Demo
