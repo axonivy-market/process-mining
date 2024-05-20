@@ -62,7 +62,7 @@ public class ProcessesMonitorUtils {
 		HashMap<String, Integer> taskCountMap = IvyTaskOccurrenceService.countTaskOccurrencesByProcessId(pid);
 		int maxFrequency = findMaxFrequency(taskCountMap);
 		String textColorRGBCode = String.valueOf(Ivy.var().get(IvyVariable.FREQUENCY_NUMBER_COLOR.getVariableName()));
-		PF.current().executeScript(REMOVE_DEFAULT_HIGHLIGHT_JS_FUNTION);
+		PF.current().executeScript(REMOVE_DEFAULT_HIGHLIGHT_JS_FUNCTION);
 		for (Entry<String, Integer> entry : taskCountMap.entrySet()) {
 			String backgroundColorRGBCode = getRGBCodefromFrequency(maxFrequency, entry.getValue());
 			PF.current().executeScript(String.format(UPDATE_FREQUENCY_COUNT_FOR_TASK, entry.getKey(), entry.getValue(),
