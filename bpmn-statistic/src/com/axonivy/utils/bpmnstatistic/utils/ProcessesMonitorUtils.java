@@ -47,7 +47,7 @@ public class ProcessesMonitorUtils {
 		Map<String, List<IProcessWebStartable>> result = new HashMap<>();
 		for (IWebStartable process : getAllProcesses()) {
 			String pmvName = process.pmv().getProjectName();
-			result.computeIfAbsent(pmvName, k -> new ArrayList<>()).add((IProcessWebStartable) process);
+			result.computeIfAbsent(pmvName, key -> new ArrayList<>()).add((IProcessWebStartable) process);
 		}
 		return result;
 	}
@@ -59,20 +59,20 @@ public class ProcessesMonitorUtils {
 
 	public void showStatisticData(String pid) {
 		Objects.requireNonNull(pid);
-		HashMap<String, Integer> taskCount = IvyTaskOccurrenceService.countTaskOccurrencesByProcessId(pid);
-		int maxFrequency = findMaxFrequency(taskCount);
+		HashMap<String, Integer> taskCountMap = IvyTaskOccurrenceService.countTaskOccurrencesByProcessId(pid);
+		int maxFrequency = findMaxFrequency(taskCountMap);
 		String textColorRGBCode = String.valueOf(Ivy.var().get(IvyVariable.FREQUENCY_NUMBER_COLOR.getVariableName()));
 		PF.current().executeScript(REMOVE_DEFAULT_HIGHLIGHT_JS_FUNTION);
-		for (Entry<String, Integer> entry : taskCount.entrySet()) {
+		for (Entry<String, Integer> entry : taskCountMap.entrySet()) {
 			String backgroundColorRGBCode = getRGBCodefromFrequency(maxFrequency, entry.getValue());
 			PF.current().executeScript(String.format(UPDATE_FREQUENCY_COUNT_FOR_TASK, entry.getKey(), entry.getValue(),
 					backgroundColorRGBCode, textColorRGBCode));
 		}
 	}
 
-	private int findMaxFrequency(HashMap<String, Integer> taskCount) {
+	private int findMaxFrequency(HashMap<String, Integer> taskCountMap) {
 		int max = 0;
-		for (Entry<String, Integer> entry : taskCount.entrySet()) {
+		for (Entry<String, Integer> entry : taskCountMap.entrySet()) {
 			max = max < entry.getValue() ? entry.getValue() : max;
 		}
 		return max;
