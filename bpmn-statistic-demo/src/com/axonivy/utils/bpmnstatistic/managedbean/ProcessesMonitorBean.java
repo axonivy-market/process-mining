@@ -27,7 +27,7 @@ public class ProcessesMonitorBean {
 	private String selectedProcessName;
 	private String selectedModuleName;
 	private String selectedProcessDiagramUrl;
-	private String selectedProcessPidId;
+	private String selectedPid;
 
 	@PostConstruct
 	private void init() {
@@ -37,15 +37,15 @@ public class ProcessesMonitorBean {
 	public void onChangeSelectedProcessName() {
 		if (StringUtils.isNotBlank(selectedProcessName) && StringUtils.isNotBlank(selectedModuleName)) {
 			Optional.ofNullable(getSelectedIProcessWebStartable()).ifPresent(process -> {
-				selectedProcessPidId = process.pid().getParent().toString();
+				selectedPid = process.pid().getParent().toString();
 				selectedProcessDiagramUrl = ProcessViewer.of(process).url().toWebLink().getAbsolute();
 			});
 		}
 	}
 
 	public void showStatisticData() {
-		if (StringUtils.isNoneBlank(selectedProcessPidId)) {
-			ProcessesMonitorUtils.getInstance().showStatisticData(selectedProcessPidId);
+		if (StringUtils.isNoneBlank(selectedPid)) {
+			ProcessesMonitorUtils.getInstance().showStatisticData(selectedPid);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class ProcessesMonitorBean {
 				.orElse(null);
 	}
 
-	public List<String> getProcessesName() {
+	public List<String> getProcessNames() {
 		if (StringUtils.isBlank(selectedModuleName)) {
 			return new ArrayList<>();
 		}
@@ -65,14 +65,6 @@ public class ProcessesMonitorBean {
 
 	public Set<String> getPmvNames() {
 		return processesMap.keySet();
-	}
-
-	public String getSelectedProcessPidId() {
-		return selectedProcessPidId;
-	}
-
-	public void setSelectedProcessPidId(String selectedProcessPidId) {
-		this.selectedProcessPidId = selectedProcessPidId;
 	}
 
 	public void setSelectedProcessDiagramUrl(String selectedProcessDiagramUrl) {

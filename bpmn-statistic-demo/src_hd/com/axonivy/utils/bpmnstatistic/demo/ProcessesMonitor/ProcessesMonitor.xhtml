@@ -44,7 +44,7 @@
 										value="#{processesMonitorBean.selectedProcessName}">
 										<f:selectItem itemValue="#{null}" itemLabel=""
 											noSelectionOption="true" />
-										<f:selectItems value="#{processesMonitorBean.processesName}" />
+										<f:selectItems value="#{processesMonitorBean.processNames}" />
 										<p:ajax update="@form"
 											listener="#{processesMonitorBean.onChangeSelectedProcessName()}" />
 									</p:selectOneMenu>

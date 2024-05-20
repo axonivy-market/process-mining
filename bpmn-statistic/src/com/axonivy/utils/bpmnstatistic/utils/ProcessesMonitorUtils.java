@@ -22,8 +22,11 @@ public class ProcessesMonitorUtils {
 	private static ProcessesMonitorUtils instance;
 	private static final String PORTAL_START_REQUEST_PATH = "/DefaultApplicationHomePage.ivp";
 	private static final String PORTAL_IN_TEAMS_REQUEST_PATH = "InTeams.ivp";
+	private static final String REMOVE_DEFAULT_HIGHLIGHT_JS_FUNTION = "santizeDiagram();";
 	private static final String UPDATE_FREQUENCY_COUNT_FOR_TASK = "addElementFrequency('%s', '%s', '%s', '%s');";
 	private static final String FREQUENCY_BACKGROUND_COLOR_LEVEL_VARIABLE_PATTERN = "frequencyBackgroundColorLevel%s";
+	private static final int DEFAULT_BACKGROUND_COLOR_LEVEL = 1;
+	private static final int HIGHEST_LEVEL_OF_BACKGROUND_COLOR = 6;
 
 	private ProcessesMonitorUtils() {
 	};
@@ -59,7 +62,7 @@ public class ProcessesMonitorUtils {
 		HashMap<String, Integer> taskCount = IvyTaskOccurrenceService.countTaskOccurrencesByProcessId(pid);
 		int maxFrequency = findMaxFrequency(taskCount);
 		String textColorRGBCode = String.valueOf(Ivy.var().get(IvyVariable.FREQUENCY_NUMBER_COLOR.getVariableName()));
-		PF.current().executeScript("santizeDiagram();");
+		PF.current().executeScript(REMOVE_DEFAULT_HIGHLIGHT_JS_FUNTION);
 		for (Entry<String, Integer> entry : taskCount.entrySet()) {
 			String backgroundColorRGBCode = getRGBCodefromFrequency(maxFrequency, entry.getValue());
 			PF.current().executeScript(String.format(UPDATE_FREQUENCY_COUNT_FOR_TASK, entry.getKey(), entry.getValue(),
@@ -76,7 +79,7 @@ public class ProcessesMonitorUtils {
 	}
 
 	private String getRGBCodefromFrequency(int max, int current) {
-		int level = (int) (max == 0 ? 1 : Math.ceil(current * 6 / max));
+		int level = (int) (max == 0 ? DEFAULT_BACKGROUND_COLOR_LEVEL : Math.ceil(current * HIGHEST_LEVEL_OF_BACKGROUND_COLOR / max));
 		return String.valueOf(Ivy.var().get(String.format(FREQUENCY_BACKGROUND_COLOR_LEVEL_VARIABLE_PATTERN, level)));
 	}
 }
