@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 jobs:
   dev_build:
-    runs-on: self-hosted
+    runs-on: [marketrunner]
     steps:
       - name: Checkout current branch
         uses: actions/checkout@v3
