@@ -29,7 +29,6 @@ public class ProcessesMonitorUtils {
 	};
 
 	public static ProcessesMonitorUtils getInstance() {
-
 		if (instance == null) {
 			instance = new ProcessesMonitorUtils();
 		}

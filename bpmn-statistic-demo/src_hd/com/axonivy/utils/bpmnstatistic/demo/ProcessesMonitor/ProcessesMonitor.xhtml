@@ -10,7 +10,7 @@
 		<ui:define name="title">#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/Title')}</ui:define>
 		<ui:define name="content">
 			<h3>
-				#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/PageHearder')}
+				#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/PageHeader')}
 			</h3>
 			<h:form id="form">
 				<p:fieldset legend="#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/ProcessInformation')}">
@@ -59,7 +59,7 @@
 					processViewerId="process-diagram-iframe"
 					srcUrl="#{processesMonitorBean.selectedProcessDiagramUrl}" 
 					actionListener="#{processesMonitorBean.showStatisticData()}"
-					btnLabel="${ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/ShowStatistic')}"/>
+					btnLabel="#{ivy.cms.co('/Dialogs/com/axonivy/process/mining/demo/Demo/ShowStatistic')}"/>
 			</h:form>
 		</ui:define>
 	</ui:composition>

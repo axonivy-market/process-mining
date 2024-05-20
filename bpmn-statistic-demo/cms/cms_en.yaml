@@ -5,7 +5,7 @@ Dialogs:
         mining:
           demo:
             Demo:
-              PageHearder: Process Monitor Page
+              PageHeader: Process Monitor Page
               PleaseSelectModule: Please select a module
               PleaseSelectProcess: Please select a process
               ProcessInformation: Process Information
