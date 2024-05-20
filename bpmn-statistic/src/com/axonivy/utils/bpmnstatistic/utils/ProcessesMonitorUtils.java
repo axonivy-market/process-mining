@@ -22,7 +22,7 @@ public class ProcessesMonitorUtils {
 	private static ProcessesMonitorUtils instance;
 	private static final String PORTAL_START_REQUEST_PATH = "/DefaultApplicationHomePage.ivp";
 	private static final String PORTAL_IN_TEAMS_REQUEST_PATH = "InTeams.ivp";
-	private static final String REMOVE_DEFAULT_HIGHLIGHT_JS_FUNTION = "santizeDiagram();";
+	private static final String REMOVE_DEFAULT_HIGHLIGHT_JS_FUNCTION = "santizeDiagram();";
 	private static final String UPDATE_FREQUENCY_COUNT_FOR_TASK = "addElementFrequency('%s', '%s', '%s', '%s');";
 	private static final String FREQUENCY_BACKGROUND_COLOR_LEVEL_VARIABLE_PATTERN = "frequencyBackgroundColorLevel%s";
 	private static final int DEFAULT_BACKGROUND_COLOR_LEVEL = 1;
