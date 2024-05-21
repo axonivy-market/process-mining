@@ -3,8 +3,6 @@ run-name: Build on branch ${{github.ref_name}} triggered by ${{github.actor}}
 
 on:
   push:
-    branches:
-      - master
   workflow_dispatch:
     inputs:
       application:
