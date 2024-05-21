@@ -44,6 +44,8 @@ jobs:
             */target/*.iar
       - name: Deploy build
         run: |
+          read -ra modules <<< "${{ steps.build-maven.outputs.BUILT_MODULES }}"
+          echo $modules
           for module in ${modules[@]}
           do
             echo $module
