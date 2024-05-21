@@ -3,6 +3,8 @@ run-name: Build on branch ${{github.ref_name}} triggered by ${{github.actor}}
 
 on:
   push:
+    branches:
+      - master
   workflow_dispatch:
     inputs:
       application:
@@ -45,9 +47,7 @@ jobs:
       - name: Deploy build
         run: |
           read -ra modules <<< "${{ steps.build-maven.outputs.BUILT_MODULES }}"
-          echo $modules
           for module in ${modules[@]}
           do
-            echo $module
             mvn com.axonivy.ivy.ci:project-build-plugin:10.0.16:deploy-to-engine -f $module/pom.xml -Divy.deploy.engine.app=${{env.DEPLOY_ENGINE_APP}} -Divy.deploy.method=HTTP -Divy.deploy.engine.url=http://localhost:8030/ -Divy.test.engine=MODIFY_EXISTING -Divy.deploy.target.version=RELEASED -Divy.deploy.timeout.seconds=120
           done
