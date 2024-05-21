@@ -46,8 +46,7 @@ jobs:
             */target/*.iar
       - name: Deploy build
         run: |
-          engineDir=/var/tools/ivy/10
           for module in ${modules[@]}
           do
-            mvn com.axonivy.ivy.ci:project-build-plugin:10.0.16:deploy-to-engine -f $module/pom.xml -Divy.deploy.engine.app=${{env.DEPLOY_ENGINE_APP}} -Divy.deploy.engine.dir=${engineDir} -Divy.test.engine=MODIFY_EXISTING -Divy.deploy.target.version=RELEASED -Divy.deploy.timeout.seconds=120
+            mvn com.axonivy.ivy.ci:project-build-plugin:10.0.16:deploy-to-engine -f $module/pom.xml -Divy.deploy.engine.app=${{env.DEPLOY_ENGINE_APP}} -Divy.deploy.method=HTTP -Divy.deploy.engine.url=http://localhost:8030/ -Divy.test.engine=MODIFY_EXISTING -Divy.deploy.target.version=RELEASED -Divy.deploy.timeout.seconds=120
           done
