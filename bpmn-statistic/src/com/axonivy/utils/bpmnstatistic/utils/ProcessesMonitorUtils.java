@@ -46,7 +46,7 @@ public class ProcessesMonitorUtils {
 	public Map<String, List<IProcessWebStartable>> getProcessesWithPmv() {
 		Map<String, List<IProcessWebStartable>> result = new HashMap<>();
 		for (IWebStartable process : getAllProcesses()) {
-			String pmvName = process.pmv().getProjectName();
+			String pmvName = process.pmv().getName();
 			result.computeIfAbsent(pmvName, key -> new ArrayList<>()).add((IProcessWebStartable) process);
 		}
 		return result;
