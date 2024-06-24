@@ -16,11 +16,12 @@ import com.axonivy.utils.bpmnstatistic.enums.IvyVariable;
 import com.axonivy.utils.bpmnstatistic.service.IvyTaskOccurrenceService;
 
 import ch.ivyteam.ivy.environment.Ivy;
+import ch.ivyteam.ivy.process.IProcessManager;
+import ch.ivyteam.ivy.process.IProjectProcessManager;
 import ch.ivyteam.ivy.process.model.BaseElement;
 import ch.ivyteam.ivy.process.model.Process;
 import ch.ivyteam.ivy.process.model.connector.SequenceFlow;
 import ch.ivyteam.ivy.process.model.value.PID;
-import ch.ivyteam.ivy.process.rdm.IProcessManager;
 import ch.ivyteam.ivy.workflow.IWorkflowProcessModelVersion;
 import ch.ivyteam.ivy.workflow.start.IProcessWebStartable;
 import ch.ivyteam.ivy.workflow.start.IWebStartable;
@@ -54,7 +55,7 @@ public class ProcessesMonitorUtils {
 		Map<String, List<IProcessWebStartable>> result = new HashMap<>();
 		for (IWebStartable process : getAllProcesses()) {
 			String pmvName = process.pmv().getName();
-			if(process.getName().equals("aasdasd.ivp")) {
+			if(process.getName().equals("abcdef.ivp")) {
 				getBaseElementOf((IProcessWebStartable) process);
 			}
 			result.computeIfAbsent(pmvName, key -> new ArrayList<>()).add((IProcessWebStartable) process);
@@ -101,30 +102,23 @@ public class ProcessesMonitorUtils {
 		if (Objects.isNull(selectedWebStartable)) {
 			return null;
 		}
+		
 		PID pid = selectedWebStartable.pid();
 		IWorkflowProcessModelVersion pmv = (IWorkflowProcessModelVersion) selectedWebStartable.pmv();
 		String processGuid = pid.getRawPid().split("-")[0];
-		List<SequenceFlow> flows = new ArrayList<>();
-		var manager = IProcessManager.instance().getProjectDataModelFor(pmv);
+		
+		IProjectProcessManager manager = IProcessManager.instance().getProjectDataModelFor(pmv);
 		Process processRdm = manager.findProcess(processGuid, true).getModel();
-		BaseElement taskElement = processRdm.search().pid(pid).findOneDeep();
+		
 		processRdm.getProcessElements().stream()
 				.forEach(element -> arrows.addAll(getArrowFromProcessElement(element.getOutgoing())));
 		arrows.forEach(item-> Ivy.log().error(item.toString()));
+		
 		return arrows;
 	}
 
 	private static List<Arrow> getArrowFromProcessElement(List<SequenceFlow> outFlow) {
 		return outFlow.stream().map(flow -> new Arrow(flow.getPid().getFieldId(), null, flow.getName()))
 				.collect(Collectors.toList());
-	}
-
-	public static BaseElement getBaseElementByPid(PID pid, IWorkflowProcessModelVersion pmv) {
-		String processGuid = pid.getRawPid().split("-")[0];
-
-		var manager = IProcessManager.instance().getProjectDataModelFor(pmv);
-		Process processRdm = manager.findProcess(processGuid, true).getModel();
-		BaseElement taskElement = processRdm.search().pid(pid).findOneDeep();
-		return taskElement;
 	}
 }

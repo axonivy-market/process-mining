@@ -1,0 +1,47 @@
+{
+  "format" : "10.0.0",
+  "id" : "19049D222ECE29FA",
+  "config" : {
+    "data" : "com.axonivy.utils.bpmnstatistic.demo.Data"
+  },
+  "elements" : [ {
+      "id" : "f0",
+      "type" : "RequestStart",
+      "name" : "abcdef.ivp",
+      "config" : {
+        "callSignature" : "abcdef",
+        "outLink" : "abcdef.ivp",
+        "case" : { }
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 64 }
+      },
+      "connect" : { "id" : "f4", "to" : "f3", "label" : {
+          "name" : "label"
+        } }
+    }, {
+      "id" : "f1",
+      "type" : "TaskEnd",
+      "visual" : {
+        "at" : { "x" : 448, "y" : 64 }
+      }
+    }, {
+      "id" : "f3",
+      "type" : "Script",
+      "visual" : {
+        "at" : { "x" : 224, "y" : 64 }
+      },
+      "connect" : { "id" : "f6", "to" : "f5", "label" : {
+          "name" : "01"
+        } }
+    }, {
+      "id" : "f5",
+      "type" : "TaskSwitchEvent",
+      "visual" : {
+        "at" : { "x" : 352, "y" : 64 }
+      },
+      "connect" : { "id" : "f2", "to" : "f1", "label" : {
+          "name" : "02"
+        } }
+    } ]
+}
