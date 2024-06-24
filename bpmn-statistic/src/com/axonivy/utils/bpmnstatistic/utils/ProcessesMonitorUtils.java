@@ -11,10 +11,20 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.PF;
 
+import com.axonivy.utils.bpmnstatistic.bo.Arrow;
 import com.axonivy.utils.bpmnstatistic.enums.IvyVariable;
 import com.axonivy.utils.bpmnstatistic.service.IvyTaskOccurrenceService;
 
 import ch.ivyteam.ivy.environment.Ivy;
+import ch.ivyteam.ivy.process.model.BaseElement;
+import ch.ivyteam.ivy.process.model.Process;
+import ch.ivyteam.ivy.process.model.connector.SequenceFlow;
+import ch.ivyteam.ivy.process.model.element.ProcessElement;
+import ch.ivyteam.ivy.process.model.value.PID;
+import ch.ivyteam.ivy.process.rdm.IProcessManager;
+import ch.ivyteam.ivy.process.rdm.IProjectProcessManager;
+import ch.ivyteam.ivy.workflow.ITask;
+import ch.ivyteam.ivy.workflow.IWorkflowProcessModelVersion;
 import ch.ivyteam.ivy.workflow.start.IProcessWebStartable;
 import ch.ivyteam.ivy.workflow.start.IWebStartable;
 
@@ -47,17 +57,20 @@ public class ProcessesMonitorUtils {
 		Map<String, List<IProcessWebStartable>> result = new HashMap<>();
 		for (IWebStartable process : getAllProcesses()) {
 			String pmvName = process.pmv().getName();
+			Ivy.log().error(pmvName);
 			result.computeIfAbsent(pmvName, key -> new ArrayList<>()).add((IProcessWebStartable) process);
 		}
 		return result;
 	}
 
 	private boolean isNotPortalHomeAndMSTeamsProcess(IWebStartable process) {
+
 		String relativeEncoded = process.getLink().getRelativeEncoded();
 		return !StringUtils.endsWithAny(relativeEncoded, PORTAL_START_REQUEST_PATH, PORTAL_IN_TEAMS_REQUEST_PATH);
 	}
 
 	public void showStatisticData(String pid) {
+		Ivy.log().error(pid);
 		Objects.requireNonNull(pid);
 		HashMap<String, Integer> taskCountMap = IvyTaskOccurrenceService.countTaskOccurrencesByProcessId(pid);
 		int maxFrequency = findMaxFrequency(taskCountMap);
@@ -79,7 +92,40 @@ public class ProcessesMonitorUtils {
 	}
 
 	private String getRGBCodefromFrequency(int max, int current) {
-		int level = (int) (max == 0 ? DEFAULT_BACKGROUND_COLOR_LEVEL : Math.ceil(current * HIGHEST_LEVEL_OF_BACKGROUND_COLOR / max));
+		int level = (int) (max == 0 ? DEFAULT_BACKGROUND_COLOR_LEVEL
+				: Math.ceil(current * HIGHEST_LEVEL_OF_BACKGROUND_COLOR / max));
 		return String.valueOf(Ivy.var().get(String.format(FREQUENCY_BACKGROUND_COLOR_LEVEL_VARIABLE_PATTERN, level)));
+	}
+
+	public static BaseElement getBaseElementOf(ITask task) {
+		if (task == null) {
+			return null;
+		}
+		var pid = task.getStart().getProcessElementId();
+		IWorkflowProcessModelVersion pmv = task.getProcessModelVersion();
+		String processGuid = pid.getRawPid().split("-")[0];
+		List<SequenceFlow> flows = new ArrayList<>();
+		var manager = IProcessManager.instance().getProjectDataModelFor(pmv);
+		Process processRdm = manager.findProcess(processGuid, true).getModel();
+		BaseElement taskElement = processRdm.search().pid(pid).findOneDeep();
+		List<Arrow> arrows = new ArrayList<>();
+		processRdm.getProcessElements().stream()
+				.forEach(element -> arrows.addAll(getArrowFromProcessElement(element.getOutgoing())));
+		arrows.forEach(item-> Ivy.log().error(item.toString()));
+		return taskElement;
+	}
+
+	private static List<Arrow> getArrowFromProcessElement(List<SequenceFlow> outFlow) {
+		return outFlow.stream().map(flow -> new Arrow(flow.getPid().getFieldId(), null, flow.getName()))
+				.collect(Collectors.toList());
+	}
+
+	public static BaseElement getBaseElementByPid(PID pid, IWorkflowProcessModelVersion pmv) {
+		String processGuid = pid.getRawPid().split("-")[0];
+
+		var manager = IProcessManager.instance().getProjectDataModelFor(pmv);
+		Process processRdm = manager.findProcess(processGuid, true).getModel();
+		BaseElement taskElement = processRdm.search().pid(pid).findOneDeep();
+		return taskElement;
 	}
 }
