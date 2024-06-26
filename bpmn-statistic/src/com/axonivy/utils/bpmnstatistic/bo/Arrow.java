@@ -6,10 +6,10 @@ public class Arrow {
 	private String label;
 	private int frequency;
 	private double medianDuration;
-	
+
 	public Arrow(String id, Float value, String label) {
 		this.arrowId = id;
-		this.value= value;
+		this.value = value;
 		this.label = label;
 	}
 

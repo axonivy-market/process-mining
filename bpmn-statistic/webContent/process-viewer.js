@@ -13,13 +13,19 @@ function removeDefaultFrequency() {
 function santizeDiagram() {
   removeDefaultFrequency();
   removeExecutedClass();
+  renderAdditionalInformation();
 }
 
 function getProcessDiagramIframe() {
   return $("#process-diagram-iframe").contents();
 }
 
-function addElementFrequency(elementId, frequencyRatio, backgroundColor, textColor) {
+function addElementFrequency(
+  elementId,
+  frequencyRatio,
+  backgroundColor,
+  textColor
+) {
   getProcessDiagramIframe()
     .find(`#sprotty_${elementId}`)
     .append(
@@ -33,14 +39,42 @@ function addElementFrequency(elementId, frequencyRatio, backgroundColor, textCol
 }
 
 function loadIframe(recheckIndicator) {
-  var iframe = document.getElementById("process-diagram-iframe");
+  let iframe = document.getElementById("process-diagram-iframe");
+  let recheckFrameTimer = setTimeout(function () {
+    loadIframe(true);
+  }, 500);
+
   if (recheckIndicator) {
     const iframeDoc = iframe.contentDocument;
-    if (iframeDoc.readyState == 'complete') {
+    if (iframeDoc.readyState == "complete") {
       santizeDiagram();
       clearTimeout(recheckFrameTimer);
       return;
     }
   }
-  recheckFrameTimer = setTimeout(function () { loadIframe(true); }, 500);
+}
+
+function renderAdditionalInformation() {
+  const pool = getProcessDiagramIframe().find(".pool");
+  console.log(pool);
+  if (pool) {
+    let rectPool =pool.find("rect.sprotty-node");
+    console.log(rectPool);
+    console.log(rectPool.css("height"));
+    console.log(rectPool.css("height").replace("px",""));
+    let height = Number(rectPool.css("height").replace("px","")) + 30;
+    pool.append(prepareAdditionalInformationPanel("aloha",height));
+  }
+}
+
+function prepareAdditionalInformationPanel(innerText, top) {
+  return `
+    <svg>
+      <text class="sprotty-label label" x="100" y="${top}">
+        <tspan>
+          ${innerText}
+        </tspan>
+      </text>
+    </svg>
+  `;
 }

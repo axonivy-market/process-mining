@@ -18,7 +18,6 @@ import com.axonivy.utils.bpmnstatistic.service.IvyTaskOccurrenceService;
 import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.process.IProcessManager;
 import ch.ivyteam.ivy.process.IProjectProcessManager;
-import ch.ivyteam.ivy.process.model.BaseElement;
 import ch.ivyteam.ivy.process.model.Process;
 import ch.ivyteam.ivy.process.model.connector.SequenceFlow;
 import ch.ivyteam.ivy.process.model.value.PID;
@@ -26,15 +25,18 @@ import ch.ivyteam.ivy.workflow.IWorkflowProcessModelVersion;
 import ch.ivyteam.ivy.workflow.start.IProcessWebStartable;
 import ch.ivyteam.ivy.workflow.start.IWebStartable;
 
+@SuppressWarnings("restriction")
 public class ProcessesMonitorUtils {
 	private static ProcessesMonitorUtils instance;
 	private static final String PORTAL_START_REQUEST_PATH = "/DefaultApplicationHomePage.ivp";
 	private static final String PORTAL_IN_TEAMS_REQUEST_PATH = "InTeams.ivp";
 	private static final String REMOVE_DEFAULT_HIGHLIGHT_JS_FUNCTION = "santizeDiagram();";
-	private static final String UPDATE_FREQUENCY_COUNT_FOR_TASK = "addElementFrequency('%s', '%s', '%s', '%s');";
+	private static final String UPDATE_FREQUENCY_COUNT_FOR_TASK_FUNCTION = "addElementFrequency('%s', '%s', '%s', '%s');";
 	private static final String FREQUENCY_BACKGROUND_COLOR_LEVEL_VARIABLE_PATTERN = "frequencyBackgroundColorLevel%s";
 	private static final int DEFAULT_BACKGROUND_COLOR_LEVEL = 1;
 	private static final int HIGHEST_LEVEL_OF_BACKGROUND_COLOR = 6;
+	private static final String ADDIATION_INFORMATION_FORMAT = "%s instances (investigation period:%s - %s)";
+	private static final String UPDATE_ADDITION_INFORMATION_FUNCTION = "updateAdditionalInformation('%s')";
 
 	private ProcessesMonitorUtils() {
 	};
@@ -55,7 +57,7 @@ public class ProcessesMonitorUtils {
 		Map<String, List<IProcessWebStartable>> result = new HashMap<>();
 		for (IWebStartable process : getAllProcesses()) {
 			String pmvName = process.pmv().getName();
-			if(process.getName().equals("abcdef.ivp")) {
+			if (process.getName().equals("abcdef.ivp")) {
 				getBaseElementOf((IProcessWebStartable) process);
 			}
 			result.computeIfAbsent(pmvName, key -> new ArrayList<>()).add((IProcessWebStartable) process);
@@ -70,7 +72,6 @@ public class ProcessesMonitorUtils {
 	}
 
 	public void showStatisticData(String pid) {
-		Ivy.log().error(pid);
 		Objects.requireNonNull(pid);
 		HashMap<String, Integer> taskCountMap = IvyTaskOccurrenceService.countTaskOccurrencesByProcessId(pid);
 		int maxFrequency = findMaxFrequency(taskCountMap);
@@ -78,8 +79,8 @@ public class ProcessesMonitorUtils {
 		PF.current().executeScript(REMOVE_DEFAULT_HIGHLIGHT_JS_FUNCTION);
 		for (Entry<String, Integer> entry : taskCountMap.entrySet()) {
 			String backgroundColorRGBCode = getRGBCodefromFrequency(maxFrequency, entry.getValue());
-			PF.current().executeScript(String.format(UPDATE_FREQUENCY_COUNT_FOR_TASK, entry.getKey(), entry.getValue(),
-					backgroundColorRGBCode, textColorRGBCode));
+			PF.current().executeScript(String.format(UPDATE_FREQUENCY_COUNT_FOR_TASK_FUNCTION, entry.getKey(),
+					entry.getValue(), backgroundColorRGBCode, textColorRGBCode));
 		}
 	}
 
@@ -102,18 +103,18 @@ public class ProcessesMonitorUtils {
 		if (Objects.isNull(selectedWebStartable)) {
 			return null;
 		}
-		
+
 		PID pid = selectedWebStartable.pid();
 		IWorkflowProcessModelVersion pmv = (IWorkflowProcessModelVersion) selectedWebStartable.pmv();
 		String processGuid = pid.getRawPid().split("-")[0];
-		
+
 		IProjectProcessManager manager = IProcessManager.instance().getProjectDataModelFor(pmv);
 		Process processRdm = manager.findProcess(processGuid, true).getModel();
-		
+
 		processRdm.getProcessElements().stream()
 				.forEach(element -> arrows.addAll(getArrowFromProcessElement(element.getOutgoing())));
-		arrows.forEach(item-> Ivy.log().error(item.toString()));
-		
+		arrows.forEach(item -> Ivy.log().error(item.toString()));
+
 		return arrows;
 	}
 
@@ -121,4 +122,10 @@ public class ProcessesMonitorUtils {
 		return outFlow.stream().map(flow -> new Arrow(flow.getPid().getFieldId(), null, flow.getName()))
 				.collect(Collectors.toList());
 	}
+
+	private static void showAdditionalInformation(String instancesCount, String fromDate, String toDate) {
+		String additionalInformation = String.format(ADDIATION_INFORMATION_FORMAT, instancesCount, fromDate, toDate);
+		PF.current().executeScript(String.format(UPDATE_ADDITION_INFORMATION_FUNCTION, additionalInformation));
+	}
+
 }
