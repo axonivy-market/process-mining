@@ -1,6 +1,9 @@
 package com.axonivy.utils.bpmnstatistic.utils;
 
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,11 +11,14 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.PF;
 
 import com.axonivy.utils.bpmnstatistic.bo.Arrow;
+import com.axonivy.utils.bpmnstatistic.bo.WorkflowProgress;
 import com.axonivy.utils.bpmnstatistic.enums.IvyVariable;
+import com.axonivy.utils.bpmnstatistic.repo.WorkflowProgressRepository;
 import com.axonivy.utils.bpmnstatistic.service.IvyTaskOccurrenceService;
 
 import ch.ivyteam.ivy.environment.Ivy;
@@ -20,10 +26,13 @@ import ch.ivyteam.ivy.process.IProcessManager;
 import ch.ivyteam.ivy.process.IProjectProcessManager;
 import ch.ivyteam.ivy.process.model.Process;
 import ch.ivyteam.ivy.process.model.connector.SequenceFlow;
+import ch.ivyteam.ivy.process.model.element.ProcessElement;
 import ch.ivyteam.ivy.process.model.value.PID;
+import ch.ivyteam.ivy.workflow.ITask;
 import ch.ivyteam.ivy.workflow.IWorkflowProcessModelVersion;
 import ch.ivyteam.ivy.workflow.start.IProcessWebStartable;
 import ch.ivyteam.ivy.workflow.start.IWebStartable;
+import ch.ivyteam.util.collections.CollectionsUtil;
 
 @SuppressWarnings("restriction")
 public class ProcessesMonitorUtils {
@@ -37,6 +46,7 @@ public class ProcessesMonitorUtils {
 	private static final int HIGHEST_LEVEL_OF_BACKGROUND_COLOR = 6;
 	private static final String ADDIATION_INFORMATION_FORMAT = "%s instances (investigation period:%s - %s)";
 	private static final String UPDATE_ADDITION_INFORMATION_FUNCTION = "updateAdditionalInformation('%s')";
+	private static final WorkflowProgressRepository repo = WorkflowProgressRepository.getInstance();
 
 	private ProcessesMonitorUtils() {
 	};
@@ -57,9 +67,6 @@ public class ProcessesMonitorUtils {
 		Map<String, List<IProcessWebStartable>> result = new HashMap<>();
 		for (IWebStartable process : getAllProcesses()) {
 			String pmvName = process.pmv().getName();
-			if (process.getName().equals("abcdef.ivp")) {
-				getBaseElementOf((IProcessWebStartable) process);
-			}
 			result.computeIfAbsent(pmvName, key -> new ArrayList<>()).add((IProcessWebStartable) process);
 		}
 		return result;
@@ -98,34 +105,50 @@ public class ProcessesMonitorUtils {
 		return String.valueOf(Ivy.var().get(String.format(FREQUENCY_BACKGROUND_COLOR_LEVEL_VARIABLE_PATTERN, level)));
 	}
 
-	public static List<Arrow> getBaseElementOf(IProcessWebStartable selectedWebStartable) {
-		List<Arrow> arrows = new ArrayList<>();
-		if (Objects.isNull(selectedWebStartable)) {
-			return null;
-		}
-
-		PID pid = selectedWebStartable.pid();
-		IWorkflowProcessModelVersion pmv = (IWorkflowProcessModelVersion) selectedWebStartable.pmv();
-		String processGuid = pid.getRawPid().split("-")[0];
-
-		IProjectProcessManager manager = IProcessManager.instance().getProjectDataModelFor(pmv);
-		Process processRdm = manager.findProcess(processGuid, true).getModel();
-
-		processRdm.getProcessElements().stream()
-				.forEach(element -> arrows.addAll(getArrowFromProcessElement(element.getOutgoing())));
-		arrows.forEach(item -> Ivy.log().error(item.toString()));
-
-		return arrows;
-	}
-
-	private static List<Arrow> getArrowFromProcessElement(List<SequenceFlow> outFlow) {
-		return outFlow.stream().map(flow -> new Arrow(flow.getPid().getFieldId(), null, flow.getName()))
-				.collect(Collectors.toList());
+	private static void convertProcessElementToWorkflowProgress(SequenceFlow flow, String elementId,
+			Long caseId) {
+		WorkflowProgress result = new WorkflowProgress();
+		result.setArrowId(flow.getPid().toString());
+		result.setCaseId(caseId);
+		result.setOriginElementId(elementId);
+		result.setTargetElementId(flow.getTarget().getPid().toString());
+		result.setStartTimeStamp(new Date());
+		repo.save(result);
 	}
 
 	private static void showAdditionalInformation(String instancesCount, String fromDate, String toDate) {
 		String additionalInformation = String.format(ADDIATION_INFORMATION_FORMAT, instancesCount, fromDate, toDate);
 		PF.current().executeScript(String.format(UPDATE_ADDITION_INFORMATION_FUNCTION, additionalInformation));
+	}
+
+	private static void updateExistingWorkflowInfoForElement(String elementId, Long caseId) {
+		//TODO: make query
+		List<WorkflowProgress> oldArrows = repo.findByTargetElementIdAndCaseId(elementId,caseId);
+		if(CollectionUtils.isEmpty(oldArrows)) {
+			return;
+		}
+		oldArrows.stream().forEach(flow-> {
+			flow.setEndTimeStamp(new Date());
+			flow.setDuration(Duration.between(flow.getEndTimeStamp().toInstant(), flow.getStartTimeStamp().toInstant()));
+		});
+	}
+	
+	public static void updateWorkflowInfoForElement(String elementId) {
+		Long caseId = Ivy.wf().getCurrentCase().getId();
+		ITask currentTask = Ivy.wf().getCurrentTask();
+		PID pid =  currentTask.getStart().getProcessElementId();
+		String processGuid = pid.getRawPid().split("-")[0];
+
+		IWorkflowProcessModelVersion pmv = currentTask.getProcessModelVersion();	
+		IProjectProcessManager manager = IProcessManager.instance().getProjectDataModelFor(pmv);
+		Process processRdm = manager.findProcess(processGuid, true).getModel();
+		//TODO: find Element by id
+		ProcessElement targetElement = processRdm.getProcessElements().stream().filter(element -> element.getPid().toString().equalsIgnoreCase(elementId)).findAny().orElse(null);
+		if(Objects.isNull(targetElement)) {
+			return;
+		}
+		updateExistingWorkflowInfoForElement(targetElement.getPid().toString(), caseId);
+		targetElement.getOutgoing().stream().forEach(outFlow -> convertProcessElementToWorkflowProgress(outFlow, elementId, caseId));
 	}
 
 }

@@ -69,6 +69,20 @@ public class WorkflowProgressRepository {
 
 	}
 
+	public List<WorkflowProgress> findByTargetElementIdAndCaseId(String elementId, Long caseId) {
+		List<WorkflowProgress> result = new ArrayList<WorkflowProgress>();
+		int queryListSize = 0;
+		do {
+			List<WorkflowProgress> queryList = createSearchQuery().textField("targetElementId")
+					.isEqualToIgnoringCase(elementId).and().numberField("caseId").isEqualTo(caseId)
+					.limit(result.size(), DEFAULT_SEARCH_LIMIT).execute().getAll();
+			queryListSize = queryList.size();
+			result.addAll(queryList);
+		} while (queryListSize % 0 == 0 && queryListSize != 0);
+		return result;
+
+	}
+
 	private Query<WorkflowProgress> createSearchQuery() {
 		return Ivy.repo().search(getType());
 	}

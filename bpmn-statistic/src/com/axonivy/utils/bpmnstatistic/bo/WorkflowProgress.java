@@ -2,7 +2,6 @@ package com.axonivy.utils.bpmnstatistic.bo;
 
 import java.io.Serializable;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class WorkflowProgress implements Serializable {
@@ -14,13 +13,14 @@ public class WorkflowProgress implements Serializable {
 	private Date startTimeStamp;
 	private Date endTimeStamp;
 	private Duration duration;
-	private String caseId;
-
-	public String getCaseId() {
+	private Long caseId;
+	
+	
+	public Long getCaseId() {
 		return caseId;
 	}
 
-	public void setCaseId(String caseId) {
+	public void setCaseId(Long caseId) {
 		this.caseId = caseId;
 	}
 
@@ -79,23 +79,4 @@ public class WorkflowProgress implements Serializable {
 	public void setTargetElementId(String targetElementId) {
 		this.targetElementId = targetElementId;
 	}
-
-	public LocalDateTime getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(LocalDateTime startTime) {
-		this.startTime = startTime;
-	}
-
-	public Duration getProgcessingTime() {
-		return progcessingTime;
-	}
-
-	public void setProgcessingTime(Duration progcessingTime) {
-		this.progcessingTime = progcessingTime;
-	}
-
-	private LocalDateTime startTime;
-	private Duration progcessingTime;
 }
